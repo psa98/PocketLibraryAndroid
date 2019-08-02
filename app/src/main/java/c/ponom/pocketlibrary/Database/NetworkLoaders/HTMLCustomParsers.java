@@ -80,8 +80,8 @@ public class HTMLCustomParsers {
 
 
         for (String excludedSubChapter:excludedSubChapters)
-            if (testString.contains(excludedSubChapter)) return false;
-        return true;
+            if (testString.contains(excludedSubChapter)) return true;
+        return false;
     }
 
 
@@ -186,7 +186,7 @@ dir( 26 ) [  58]       Атеистическая публицистика
 
         //repository.insertRecord((SubChapter[])listResult.toArray());
 
-        String[] authors1 = result1.split("\n");
+ //       String[] authors1 = result1.split("\n");
 
 
         /* for (String currentAuthor:authors1)
