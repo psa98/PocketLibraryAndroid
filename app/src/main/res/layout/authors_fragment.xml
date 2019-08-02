@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="c.ponom.PocketLibrary.View.Fragments.AuthorsListFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello from Authors Fragment" />
+
+    <TextView
+        android:id="@+id/currentSubChapter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current SubChapter" />
+
+
+</FrameLayout>

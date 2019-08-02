@@ -1,0 +1,189 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 11,
+    "identityHash": "8d70884db2c267fb471407fff24ba150",
+    "entities": [
+      {
+        "tableName": "books",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`authorName` TEXT, `subChapterName` TEXT, `bookName` TEXT NOT NULL, `url` TEXT, `sizeInKb` INTEGER, `uriToFile` TEXT, PRIMARY KEY(`bookName`))",
+        "fields": [
+          {
+            "fieldPath": "authorName",
+            "columnName": "authorName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "subChapterName",
+            "columnName": "subChapterName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bookName",
+            "columnName": "bookName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sizeInKb",
+            "columnName": "sizeInKb",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uriToFile",
+            "columnName": "uriToFile",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "bookName"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_books_authorName",
+            "unique": false,
+            "columnNames": [
+              "authorName"
+            ],
+            "createSql": "CREATE  INDEX `index_books_authorName` ON `${TABLE_NAME}` (`authorName`)"
+          },
+          {
+            "name": "index_books_subChapterName",
+            "unique": false,
+            "columnNames": [
+              "subChapterName"
+            ],
+            "createSql": "CREATE  INDEX `index_books_subChapterName` ON `${TABLE_NAME}` (`subChapterName`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "authors",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`subChapterName` TEXT, `authorName` TEXT NOT NULL, `url` TEXT, `sizeInMb` INTEGER, `isLoaded` INTEGER NOT NULL, PRIMARY KEY(`authorName`), FOREIGN KEY(`subChapterName`) REFERENCES `subchapters`(`subChapterName`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "subChapterName",
+            "columnName": "subChapterName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "authorName",
+            "columnName": "authorName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sizeInMb",
+            "columnName": "sizeInMb",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isLoaded",
+            "columnName": "isLoaded",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "authorName"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_authors_subChapterName",
+            "unique": false,
+            "columnNames": [
+              "subChapterName"
+            ],
+            "createSql": "CREATE  INDEX `index_authors_subChapterName` ON `${TABLE_NAME}` (`subChapterName`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "subchapters",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "subChapterName"
+            ],
+            "referencedColumns": [
+              "subChapterName"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "subchapters",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `subChapterName` TEXT NOT NULL, `url` TEXT, `sizeInMb` INTEGER, `isLoaded` INTEGER NOT NULL, PRIMARY KEY(`subChapterName`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "subChapterName",
+            "columnName": "subChapterName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sizeInMb",
+            "columnName": "sizeInMb",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isLoaded",
+            "columnName": "isLoaded",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "subChapterName"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8d70884db2c267fb471407fff24ba150\")"
+    ]
+  }
+}

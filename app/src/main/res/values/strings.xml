@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Locator</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="clear_list">Clear list</string>
+    <string name="load_list">Load list</string>
+    <string name="load_book">Load Book</string>
+    <string name="saved_books_list">Saved books list</string>
+</resources>

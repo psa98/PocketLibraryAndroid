@@ -1,0 +1,113 @@
+package c.ponom.pocketlibrary.View.Adapters;
+
+import android.graphics.Typeface;
+import android.support.annotation.NonNull;
+import android.support.v7.recyclerview.extensions.ListAdapter;
+import android.support.v7.util.DiffUtil;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
+import c.ponom.pocketlibrary.R;
+import c.ponom.pocketlibrary.View.MainActivity;
+
+
+public class SubChapterAdapter extends ListAdapter<SubChapter, SubChapterAdapter.SubChapterUserViewHolder> {
+
+    // данный метод был переделан с обычного адаптера, на ListAdapter
+
+    //private  List<SubChapter> listItems=null;
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+
+        //слушатель один - и он всегда берет данные из тега кликнутого вью
+        @Override
+        public void onClick(View view) {
+            SubChapter subChapter = ((SubChapter) view.getTag());
+            ((MainActivity) view.getContext()).showAuthorsListForSubChapter (subChapter);
+
+        }
+    };
+
+    public SubChapterAdapter() {
+        super(SubChapterAdapter.DIFF_CALLBACK);
+
+    }
+
+
+    @NonNull
+    @Override
+    public SubChapterUserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.sub_chapters_item, parent, false);
+        view.setOnClickListener(onClickListener);
+        return new SubChapterUserViewHolder(view);
+
+    }
+
+
+    @Override
+    public void onBindViewHolder(@NonNull SubChapterUserViewHolder viewHolder, int i) {
+        SubChapter item = getItem(i);
+        viewHolder.chapterName.setText(item.subChapterName);
+        if (item.isLoaded) viewHolder.chapterName.setTypeface(Typeface.DEFAULT_BOLD);
+        else viewHolder.chapterName.setTypeface(Typeface.DEFAULT);
+
+        viewHolder.size.setText(item.sizeInMb==null?
+                "":item.sizeInMb.toString());
+        viewHolder.url.setText(item.url);
+         viewHolder.itemView.setTag(item);
+
+    }
+
+
+
+
+
+
+
+
+    class SubChapterUserViewHolder extends RecyclerView.ViewHolder {
+
+
+            TextView chapterName;
+            TextView size;
+            TextView url;
+
+        SubChapterUserViewHolder(View view) {
+                super(view);
+                url=view.findViewById(R.id.url);
+                chapterName= view.findViewById(R.id.chapterName);
+                size=view.findViewById(R.id.size);
+
+            }
+
+        }
+
+
+    public  static final DiffUtil.ItemCallback<SubChapter> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<SubChapter>() {
+                @Override
+                public boolean areItemsTheSame(
+                        @NonNull SubChapter oldItem, @NonNull SubChapter newItem) {
+                    // User properties may have changed if reloaded from the DB, but ID is fixed
+                    return oldItem.subChapterName.equals(newItem.subChapterName);
+                }
+                @Override
+                public boolean areContentsTheSame(
+                        @NonNull SubChapter oldItem, @NonNull SubChapter newItem) {
+                    // NOTE: if you use equals, your object must properly override Object#equals()
+                    // Incorrectly returning false here will result in too many animations.
+                    return oldItem.subChapterName.equals(newItem.subChapterName)&&
+                            oldItem.url.equals(newItem.url);
+                }
+            };
+
+
+}
+
