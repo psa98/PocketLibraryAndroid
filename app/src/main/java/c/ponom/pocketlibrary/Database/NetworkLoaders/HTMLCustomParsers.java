@@ -23,11 +23,7 @@ public class HTMLCustomParsers {
 
 
     public static ArrayList<SubChapter> parseMainPage(String documentString){
-        /*текущая подзадача следующая:
-        на входе получаем как сейчас документ, то есть вызываем это уже асинхронно из метода загрузки
-        Возвращаем List of SubChapter, правильно заполненный в плане имен каталогов, либо пустой список/null
-        если на входе ерунда, или ошибка разбора.
-         */
+
 
         Repository repository = Objects.requireNonNull(Repository.getINSTANCE(),"repository not exist!");
         Document doc= Jsoup.parse(documentString);
@@ -40,7 +36,8 @@ public class HTMLCustomParsers {
         //s содержит примерно следубщее <a href ="XXX/"> <b>Название</b></a>
 
 
-        Pattern removeInStart = Pattern.compile("(?:<a href=\"|<\\/?b>|<\\/a>|>|\")",Pattern.MULTILINE);
+        Pattern removeInStart = Pattern.
+                compile("(?:<a href=\"|<\\/?b>|<\\/a>|>|<br>||<\\/?i>|\")",Pattern.MULTILINE);
         Matcher matcher = removeInStart.matcher(s);
         // вычищаем все применяемые сейчас теги
 
@@ -61,69 +58,37 @@ public class HTMLCustomParsers {
             SubChapter listRecord = new SubChapter();
             listRecord.url="http://lib.ru/"+record[0]+"/";
             listRecord.subChapterName=record[1];
-            if (!listRecord.subChapterName.equals("Награды")){
+            if (!excludeSubChapters(listRecord.subChapterName)){
             listResult.add(listRecord);
             repository.insertRecord(listRecord);}
-            // todo исключить из списка сбойные (пустые) по списку авторов разделы вручную
 
-            /// todo - тут будут все проверки на то что не съехало ничего
-        }
+            /// todo - тут будут все проверки на то что не съехало ничего/
+            // потом убрать возвращаемые списки - они не нужны
+            }
         return listResult;
     }
 
 
 
-    private boolean excludeSubChapters(){
-        /*
-        Разделы, исключаемые из списка вручную:
-        Награды - нет авторов/текстов
+    private static boolean excludeSubChapters(String testString){
+
+        String[] excludedSubChapters={
+                "Кинофильм", "Авторская", "Парашю","английский","Зарубежная", "БЛИЖНЕГО","Russian",
+                "РОССЫПЬЮ","Клуб ", "Законы", "АСТРОЛОГИЯ", "Диалект", "Нейро","иблиотек", "Бухучет",
+                "VMw","Unix","Web","fire","Технические", "ПРОГРАММ",  "Разноо", "О правах"
+        };
 
 
-( 57 )       Кинофильмы, TV, video... - неактуально, бедный набор
-(110 )       Зарубежная рок-музыка -неактуально, есть очень немного лирики
-             Законы, акты, постановления - устарело и мало
-             Диалектическеи книги - то же самое
-            Бухучет - мало, устарело
-
-            учебники по програмиированию - к сожалению они в латексе,
-            туда же wmvare, unix, web, security
-
-            дизайн библиотеки
-            разнобразные тексты
-
-
-
-
-
-         */
-
-
-
+        for (String excludedSubChapter:excludedSubChapters)
+            if (testString.contains(excludedSubChapter)) return false;
         return true;
     }
 
 
 
 
-
-
-
-
-
-
-
-
-
- /*теоретически три метода парсинга могут оказаться одинаковыми, но реализованы как три
-        разных бойлерплейта на случай изменения формате базы и для раздельной отладки
-         */
-
     public static ArrayList<Author> parseSubChapter(String documentString,SubChapter currentSubChapter){
-        /*текущая подзадача следующая:
-        на входе получаем как сейчас документ, то есть вызываем это уже асинхронно из метода загрузки что
-        Возвращаем List of Authors, правильно заполненный в плане имен каталогов, либо пустой список/null
-        если на входе ерунда, или ошибка разбора.
-         */
+
 
         Repository repository = Objects.requireNonNull(Repository.getINSTANCE(),"repository not exist!");
         // todo - заменить это везде на даггер
@@ -141,7 +106,7 @@ public class HTMLCustomParsers {
 
         // содержит примерно следубщее <a href ="XXX/"> <b>Название</b></a>
 
-        Pattern removeInStart = Pattern.compile("(?:<a href=\"|<\\/?b>|<\\/a>|>|\")",Pattern.MULTILINE);
+        Pattern removeInStart = Pattern.compile("(?:<a href=\"|<\\/?b>|<\\/a>|>|<br>||<\\/?i>|\")",Pattern.MULTILINE);
         Pattern removeInStart1 = Pattern.compile("(?:<a href=\"|<\\/?b>|<\\/a>|>)",Pattern.MULTILINE);
 
         Matcher matcher = removeInStart.matcher(s);
