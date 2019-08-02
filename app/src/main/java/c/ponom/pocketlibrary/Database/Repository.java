@@ -1,12 +1,11 @@
 package c.ponom.pocketlibrary.Database;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -36,8 +35,6 @@ public class Repository {
         // класс реализуется как синглтон, так что мы можем позволить себе использовать статические ссылки
         // они нужны для работы с AsyncTask. Проблема уйдет по мере
         // todo переписать с асинков на экзекьюторы?
-        //private LiveData<List<Book>> mAllBookLiveList;
-        //private LiveData<List<Author>> mAllAuthorsLiveList;
         private LiveData<List<SubChapter>> mAllSubChapterLiveList;
         private static HashMap<String, Bundle> webViewState = new HashMap<>();
 
@@ -87,6 +84,8 @@ public class Repository {
         public LiveData<Integer> getTotalLoadedKb()
         {return mBookDAO.getLoadedBooksTotalKB();}
 
+        public int getTotalLoadedKbForTest()
+        {return mBookDAO.getTotalLoadedKbForTest();}
 
 
     public void insertRecord(BaseEntity record) {

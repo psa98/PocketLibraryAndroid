@@ -1,16 +1,18 @@
 package c.ponom.pocketlibrary.View.WebView;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -24,10 +26,11 @@ import c.ponom.pocketlibrary.View.MainActivity;
 public class WebViewFragment extends Fragment {
 
     private static Book currentBook;
-    WebView webView;
+    private WebView webView;
     private static String currentFileName;
     int x,y;
-    static String baseDir;
+   
+    public float progress;
 
 
 
@@ -37,8 +40,7 @@ public class WebViewFragment extends Fragment {
 
          // todo теоретически можно использовать custom chrome tabs, которые очень быстрые -
         //  но они не работают с локальной строкой - надо поднимать локальный сервер
-        baseDir= book.url.substring(0,book.url.lastIndexOf("/"));
-        Log.e("!!!", "newInstance: "+baseDir);
+
         return new WebViewFragment();
     }
 
@@ -46,7 +48,10 @@ public class WebViewFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-   }
+        if (savedInstanceState!=null)
+            progress=savedInstanceState.getFloat("progress");
+
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -82,7 +87,6 @@ public class WebViewFragment extends Fragment {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(2048*1024);
         byte[] byteBuff = new byte[512];
         int len;
-        Log.e("File", "loadSavedFile: start" );
         try (FileInputStream inputStream = new FileInputStream(file)) {
             while (true) {
                 len = inputStream.read(byteBuff);
@@ -101,6 +105,32 @@ public class WebViewFragment extends Fragment {
 
 
 
+
+    // Calculate the % of scroll progress in the actual web page content
+    private float calculateProgression(WebView content) {
+        float positionTopView = content.getTop();
+        float contentHeight = content.getContentHeight();
+        float currentScrollPosition = content.getScrollY();
+        return  (currentScrollPosition - positionTopView) / contentHeight;
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        float mProgress = calculateProgression(webView);
+        outState.putFloat("progress",mProgress);
+        super.onSaveInstanceState(outState);
+
+
+    }
+
+
+
+
+
+
+
+
     /* //todo - при просмотре наладить - обработку "назад", запоминание позиции при выходе.
     @Override
     public void onBackPressed() {
@@ -111,6 +141,8 @@ public class WebViewFragment extends Fragment {
         }
     } */
 
-
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
 }

@@ -1,10 +1,11 @@
 package c.ponom.pocketlibrary.View;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -42,18 +43,21 @@ public class MainActivity extends AppCompatActivity {
     public static DaoDatabase database;
     public static Repository repository;
     Toolbar toolbar=null;
-//    private FirebaseAnalytics mFirebaseAnalytics;
+  //  private FirebaseAnalytics mFirebaseAnalytics;
+    ProgressDialog pd;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pd = new ProgressDialog(this);
         setContentView(R.layout.start_screen);
- //       mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+    //  mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         database = DaoDatabase.getDatabase(this);
         repository=Repository.getRepository(this.getApplication());
         toolbar =findViewById(R.id.main_toolbar);
         toolbar.inflateMenu(R.menu.menus);
+        //int a =2/0; //test error
         toolbar.setOnMenuItemClickListener(
                 new Toolbar.OnMenuItemClickListener() {
                     @Override
@@ -125,17 +129,17 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    @Nullable
+
     public void setNewTitle(String title, String subtitle){
         if (toolbar == null) {
             return;
         }
         toolbar.setSubtitle(subtitle);
         toolbar.setTitle(title);
-    };
+    }
 
 
-     void loadChapterList(final Context context){
+     public static void loadChapterList(final Context context){
         RequestQueue queue = Volley.newRequestQueue(context);
         //final TextView textView = findViewById(R.id.errorText);
 
@@ -247,7 +251,19 @@ public class MainActivity extends AppCompatActivity {
                 .addToBackStack(null)
                 .commit();
 
-    };
+    }
+
+    public void showProgressDialog (){
+        pd.setTitle("Please wait");
+        pd.setMessage("");
+        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pd.setIndeterminate(true);
+        pd.show();
+    }
+    public void hideProgressDialog(){
+        pd.dismiss();
+    }
+
 
     /* глобальные задачи
     todo рисование нормальных списков по Материал.

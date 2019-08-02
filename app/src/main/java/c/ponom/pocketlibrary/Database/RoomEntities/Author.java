@@ -1,11 +1,11 @@
 package c.ponom.pocketlibrary.Database.RoomEntities;
 
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+import androidx.annotation.NonNull;
 
 @Entity(tableName = "authors",foreignKeys = @ForeignKey(entity = SubChapter.class,
         parentColumns = "subChapterName",

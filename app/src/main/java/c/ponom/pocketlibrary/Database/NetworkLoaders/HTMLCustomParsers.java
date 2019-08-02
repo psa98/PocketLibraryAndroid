@@ -37,11 +37,12 @@ public class HTMLCustomParsers {
 
 
         Pattern removeInStart = Pattern.
-                compile("(?:<a href=\"|<\\/?b>|<\\/a>|>|<br>||<\\/?i>|\")",Pattern.MULTILINE);
+                compile("(?:<a href=\"|<\\/?b>|<\\/a>|>|<br>|<\\/?i>|\")",Pattern.MULTILINE);
         Matcher matcher = removeInStart.matcher(s);
         // вычищаем все применяемые сейчас теги
 
-        //
+        //"(?:<a href=\"|<\\/?b>|<\\/a>|>|\")"
+        //"(?:<a href=\"|<\\/?b>|<\\/a>|>|<br>||<\\/?i>|\")"
         String result = matcher.replaceAll("");
 
         /* Получаем примерно такое:
@@ -72,9 +73,9 @@ public class HTMLCustomParsers {
 
     private static boolean excludeSubChapters(String testString){
 
-        String[] excludedSubChapters={
+        String[] excludedSubChapters={"Награды",
                 "Кинофильм", "Авторская", "Парашю","английский","Зарубежная", "БЛИЖНЕГО","Russian",
-                "РОССЫПЬЮ","Клуб ", "Законы", "АСТРОЛОГИЯ", "Диалект", "Нейро","иблиотек", "Бухучет",
+                "РОССЫПЬЮ","Клуб ", "Законы", "АСТРОЛОГИЯ", "Диалект", "Нейро","иблио", "Бухучет",
                 "VMw","Unix","Web","fire","Технические", "ПРОГРАММ",  "Разноо", "О правах"
         };
 
@@ -106,7 +107,7 @@ public class HTMLCustomParsers {
 
         // содержит примерно следубщее <a href ="XXX/"> <b>Название</b></a>
 
-        Pattern removeInStart = Pattern.compile("(?:<a href=\"|<\\/?b>|<\\/a>|>|<br>||<\\/?i>|\")",Pattern.MULTILINE);
+        Pattern removeInStart = Pattern.compile("(?:<a href=\"|<\\/?b>|<\\/a>|>|<br>|<\\/?i>|\")",Pattern.MULTILINE);
         Pattern removeInStart1 = Pattern.compile("(?:<a href=\"|<\\/?b>|<\\/a>|>)",Pattern.MULTILINE);
 
         Matcher matcher = removeInStart.matcher(s);
@@ -275,7 +276,7 @@ dir( 26 ) [  58]       Атеистическая публицистика
         splittedStrings = new ArrayList<>(Arrays.asList(cleanedString.toString().split("\n")));
 
         Pattern findSizeInKb = Pattern.compile("(\\(.\\d*\\dk\\))");
-        Pattern contentsToRemove = Pattern.compile("(.*?<a href=\"|<\\/b>|><b>|<\\/a>|<\\/li>)");
+        Pattern contentsToRemove = Pattern.compile("(.*?<a href=\"|<\\/b>|><b>|<br>|<\\/a>|<\\/li>)");
 
 
         for (String record:splittedStrings) {

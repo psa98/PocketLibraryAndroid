@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="c.ponom.PocketLibrary.View.MainActivity">
+    tools:context="c.ponom.pocketlibrary.View.MainActivity">
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewBooksOfAuthor"
         android:orientation="vertical"
         android:layout_width="match_parent"

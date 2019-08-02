@@ -3,11 +3,12 @@ package c.ponom.pocketlibrary.View.Adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.ListAdapter;
-import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,9 +45,23 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         @Override
         public void onClick(View view) {
         Book book= (Book) view.getTag();
+        view.setClickable(false);//это чтобы убрать возможность двойного клика
             loadBookAndShow(book,view.getContext());
         }
     };
+
+
+    private View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {
+
+        @Override
+        public boolean onLongClick(View view) {
+            Book book= (Book) view.getTag();
+            //Toast.makeText(view.getContext(),"Longclick! "+book.sizeInKb,Toast.LENGTH_SHORT).show();
+            // todo тут будет вызываться удаление файла, обнуление полей записи размер и путь - после вызова контекстного меню
+            return true;
+        }
+    };
+
 
     public BookAdapter() {
         super(BookAdapter.DIFF_CALLBACK);
@@ -54,7 +69,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
     }
 
     public static void loadBookAndShow(final Book bookToRead, final Context context) {
-
+        //todo - переместить все вызываемое  во вьюмодель. А загрузку - в репозитарий
         String urlToRead=bookToRead.url;
         if (!urlToRead.endsWith(".txt"))return;
 
@@ -119,6 +134,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
             View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.book_item_new, parent, false);
                 view.setOnClickListener(onClickListener);
+                view.setOnLongClickListener(onLongClickListener);
                 return new ViewHolder(view);
 
         }
@@ -137,6 +153,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         viewHolder.itemView.setTag(item);
         viewHolder.loadButton.setVisibility
                 (item.uriToFile.isEmpty()? View.VISIBLE:View.INVISIBLE);
+
 
     }
 
