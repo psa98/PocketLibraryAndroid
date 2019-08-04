@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +32,13 @@ import c.ponom.pocketlibrary.Database.Repository;
 import c.ponom.pocketlibrary.Database.RoomEntities.Book;
 import c.ponom.pocketlibrary.R;
 import c.ponom.pocketlibrary.Utils.NameHashes;
-import c.ponom.pocketlibrary.View.MainActivity;
+import c.ponom.pocketlibrary.View.SingleActivity;
 
 
 public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
 
     static Repository repository;
+    Bitmap icon, icon_done;
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
 
@@ -75,7 +75,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
 
         //если книжка скачана ранее - вызываем запрос на чтение
         if (bookToRead.uriToFile.length()>0){
-            ((MainActivity) context).launchWebView(bookToRead.uriToFile,bookToRead);
+            ((SingleActivity) context).launchWebView(bookToRead.uriToFile,bookToRead);
         return;
         }
         //иначе скачиваем файл на диск и передаем его новый адрес в репозиторий и в вызов фрагмента
@@ -100,7 +100,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
                     bookToRead.sizeInKb=(int)(new File(filePath).length()/1024);
                     repository.updateRecord(bookToRead);
                     //todo -  в репозиторий перенести всю работу с файлами
-                    ((MainActivity) context).launchWebView(filePath,bookToRead);
+                    ((SingleActivity) context).launchWebView(filePath,bookToRead);
 
                     }
                 }, new Response.ErrorListener() {
@@ -151,9 +151,9 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         viewHolder.author.setText(item.authorName);
         viewHolder.book.setText(item.bookName);
         viewHolder.itemView.setTag(item);
-        viewHolder.loadButton.setVisibility
-                (item.uriToFile.isEmpty()? View.VISIBLE:View.INVISIBLE);
-
+        //viewHolder.loadButton.setVisibility
+          //      (item.uriToFile.isEmpty()? View.VISIBLE:View.INVISIBLE);
+        viewHolder.loadButton.setImageBitmap(item.uriToFile.isEmpty()? icon:icon_done);
 
     }
 
@@ -174,9 +174,14 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
                 author=view.findViewById(R.id.authorNameInBooks);
                 book=view.findViewById(R.id.BooknameInBooks);
                 loadButton=view.findViewById(R.id.loadBookIcon);
+                icon= BitmapFactory.
+                        decodeResource(view.getContext().
+                                getResources(),android.R.drawable.checkbox_off_background);
+                icon_done= BitmapFactory.
+                        decodeResource(view.getContext().
+                                getResources(),android.R.drawable.checkbox_on_background);
 
-                Bitmap icon = BitmapFactory.decodeResource(view.getContext().getResources(),R.drawable.loaded_black);
-                loadButton.setImageBitmap(icon);
+
                 url.setVisibility(View.GONE);
                 //временно убрано
 

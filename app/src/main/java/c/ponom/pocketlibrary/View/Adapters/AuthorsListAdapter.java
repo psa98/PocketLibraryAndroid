@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import c.ponom.pocketlibrary.Database.RoomEntities.Author;
 import c.ponom.pocketlibrary.R;
-import c.ponom.pocketlibrary.View.MainActivity;
+import c.ponom.pocketlibrary.View.SingleActivity;
 
 
 public class AuthorsListAdapter extends ListAdapter<Author, AuthorsListAdapter.AuthorUserViewHolder> {
@@ -26,7 +26,7 @@ public class AuthorsListAdapter extends ListAdapter<Author, AuthorsListAdapter.A
         public void onClick(View view) {
             Author author= (Author) view.getTag();
             if ( !author.url.contains(".txt")) {
-                ((MainActivity) view.getContext()).showBooksForSubChapterAuthor(author);
+                ((SingleActivity) view.getContext()).showBooksForSubChapterAuthor(author);
             }else
             // - отдельные "авторы" на самом деле представляют собой ссылку на файл, а не на каталог.
             //todo Такие потом будем  открывать прямо отсюда
@@ -91,7 +91,6 @@ public class AuthorsListAdapter extends ListAdapter<Author, AuthorsListAdapter.A
                 @Override
                 public boolean areItemsTheSame(
                         @NonNull Author oldItem, @NonNull Author newItem) {
-                    // User properties may have changed if reloaded from the DB, but ID is fixed
                     return oldItem.subChapterName.equals(newItem.subChapterName)&&
                             oldItem.url.equals(newItem.url)&&
                             (oldItem.isLoaded==newItem.isLoaded);

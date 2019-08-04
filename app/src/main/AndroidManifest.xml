@@ -12,13 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_big_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="c.ponom.pocketlibrary.View.MainActivity">
+        <activity android:name="c.ponom.pocketlibrary.View.SingleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Dagger.MyActivity" />
     </application>
 
 </manifest>

@@ -2,14 +2,11 @@ package c.ponom.pocketlibrary.View.WebView;
 
 import android.app.Application;
 import android.graphics.Bitmap;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import c.ponom.pocketlibrary.Database.Repository;
-import c.ponom.pocketlibrary.View.MainActivity;
+import c.ponom.pocketlibrary.View.SingleActivity;
 
 public class WebCustomWebViewClient extends WebViewClient {
     private Repository repository;
@@ -27,13 +24,13 @@ public class WebCustomWebViewClient extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
-        ((MainActivity) view.getContext()).showProgressDialog();
+        ((SingleActivity) view.getContext()).showProgressDialog();
 
     }
 
     @Override
     public void onPageCommitVisible(final WebView view, String url) {
-        ((MainActivity) view.getContext()).hideProgressDialog();
+        ((SingleActivity) view.getContext()).hideProgressDialog();
         super.onPageCommitVisible(view, url);
         final float  progressToRestore =0.5f;
 
@@ -55,7 +52,7 @@ public class WebCustomWebViewClient extends WebViewClient {
     @Override
     public void onPageFinished(final WebView view, String url) {
         super.onPageFinished(view, url);
-        ((MainActivity) view.getContext()).hideProgressDialog();
+        ((SingleActivity) view.getContext()).hideProgressDialog();
         final float  progressToRestore =0.5f;
 
         /* надо в каком - то классе-контейнере хранить прогресс. Вероятно в репозитарии

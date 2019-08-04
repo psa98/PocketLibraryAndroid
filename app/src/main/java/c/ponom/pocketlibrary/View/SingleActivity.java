@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 
+import c.ponom.pocketlibrary.Dagger._DaggerTestClass;
 import c.ponom.pocketlibrary.Database.DaoDatabase;
 import c.ponom.pocketlibrary.Database.NetworkLoaders.HTMLCustomParsers;
 import c.ponom.pocketlibrary.Database.Repository;
@@ -37,7 +38,7 @@ import c.ponom.pocketlibrary.View.Fragments.LoadedListFragment;
 import c.ponom.pocketlibrary.View.Fragments.SubChaptersFragment;
 import c.ponom.pocketlibrary.View.WebView.WebViewFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class SingleActivity extends AppCompatActivity {
 
     String YandexAPI = "AOpkMF0BAAAAklyiHQQD5AL6FpeRxKCBZlBhqklDbcA2Up8AAAAAAAAAAABupmQxoJIt_0yufDgylSz2Ishx5A==";
     public static DaoDatabase database;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //_DaggerTestClass daggerTestClass=new _DaggerTestClass();
+        //daggerTestClass.run();
         pd = new ProgressDialog(this);
         setContentView(R.layout.start_screen);
     //  mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);

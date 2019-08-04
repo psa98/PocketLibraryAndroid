@@ -6,13 +6,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -21,7 +20,7 @@ import java.io.FileInputStream;
 
 import c.ponom.pocketlibrary.Database.RoomEntities.Book;
 import c.ponom.pocketlibrary.R;
-import c.ponom.pocketlibrary.View.MainActivity;
+import c.ponom.pocketlibrary.View.SingleActivity;
 
 public class WebViewFragment extends Fragment {
 
@@ -57,8 +56,8 @@ public class WebViewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.web_content_scrolling, container, false);
-        ((MainActivity) getContext()).setNewTitle(currentBook.authorName,currentBook.bookName);
-        ((MainActivity) getContext()).setBackVisibility(true);
+        ((SingleActivity) getContext()).setNewTitle(currentBook.authorName,currentBook.bookName);
+        ((SingleActivity) getContext()).setBackVisibility(true);
         webView =  view.findViewById(R.id.webViewMain);
         webView.setWebViewClient(new WebCustomWebViewClient());
         String stringToRead = loadSavedFile(this.getContext(), currentFileName);

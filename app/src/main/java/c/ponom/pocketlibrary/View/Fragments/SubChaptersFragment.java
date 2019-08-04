@@ -19,7 +19,7 @@ import java.util.List;
 import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
 import c.ponom.pocketlibrary.R;
 import c.ponom.pocketlibrary.View.Adapters.SubChapterAdapter;
-import c.ponom.pocketlibrary.View.MainActivity;
+import c.ponom.pocketlibrary.View.SingleActivity;
 import c.ponom.pocketlibrary.View.ViewModels.SubChaptersViewModel;
 
 
@@ -45,8 +45,8 @@ public class SubChaptersFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(this).get(SubChaptersViewModel.class);
         View view = inflater.inflate(R.layout.subchapter_list, container, false);
-        ((MainActivity) getContext()).setNewTitle("","");
-        ((MainActivity) getContext()).setBackVisibility(false);
+        ((SingleActivity) getContext()).setNewTitle("","");
+        ((SingleActivity) getContext()).setBackVisibility(false);
 
 
         final SubChapterAdapter subChapterAdapter=new SubChapterAdapter();

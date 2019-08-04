@@ -21,7 +21,7 @@ import c.ponom.pocketlibrary.Database.RoomEntities.Author;
 import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
 import c.ponom.pocketlibrary.R;
 import c.ponom.pocketlibrary.View.Adapters.AuthorsListAdapter;
-import c.ponom.pocketlibrary.View.MainActivity;
+import c.ponom.pocketlibrary.View.SingleActivity;
 import c.ponom.pocketlibrary.View.ViewModels.AuthorsListViewModel;
 
 public class AuthorsListFragment extends Fragment {
@@ -47,8 +47,8 @@ public class AuthorsListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
        View view = inflater.inflate(R.layout.authors_list_in_subchapter, container, false);
         final AuthorsListAdapter authorsListAdapter =new AuthorsListAdapter();
-        ((MainActivity) getContext()).setNewTitle(currentSubChapter.subChapterName,"");
-        ((MainActivity) getContext()).setBackVisibility(true);
+        ((SingleActivity) getContext()).setNewTitle(currentSubChapter.subChapterName,"");
+        ((SingleActivity) getContext()).setBackVisibility(true);
         mViewModel = ViewModelProviders.of(this).get(AuthorsListViewModel.class);
         mViewModel.initViewModel(currentSubChapter);
         mViewModel.getAuthorsListForSubChapter().observe(this, new Observer<List<Author>>() {

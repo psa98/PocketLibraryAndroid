@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
 import c.ponom.pocketlibrary.R;
-import c.ponom.pocketlibrary.View.MainActivity;
+import c.ponom.pocketlibrary.View.SingleActivity;
 
 
 public class SubChapterAdapter extends ListAdapter<SubChapter, SubChapterAdapter.SubChapterUserViewHolder> {
@@ -27,7 +27,7 @@ public class SubChapterAdapter extends ListAdapter<SubChapter, SubChapterAdapter
         @Override
         public void onClick(View view) {
             SubChapter subChapter = ((SubChapter) view.getTag());
-            ((MainActivity) view.getContext()).showAuthorsListForSubChapter (subChapter);
+            ((SingleActivity) view.getContext()).showAuthorsListForSubChapter (subChapter);
 
         }
     };
@@ -95,7 +95,7 @@ public class SubChapterAdapter extends ListAdapter<SubChapter, SubChapterAdapter
                 @Override
                 public boolean areItemsTheSame(
                         @NonNull SubChapter oldItem, @NonNull SubChapter newItem) {
-                    // User properties may have changed if reloaded from the DB, but ID is fixed
+
                     return oldItem.subChapterName.equals(newItem.subChapterName);
                 }
                 @Override

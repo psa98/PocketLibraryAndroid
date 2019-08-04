@@ -20,7 +20,7 @@ import java.util.List;
 import c.ponom.pocketlibrary.Database.RoomEntities.Book;
 import c.ponom.pocketlibrary.R;
 import c.ponom.pocketlibrary.View.Adapters.BookAdapter;
-import c.ponom.pocketlibrary.View.MainActivity;
+import c.ponom.pocketlibrary.View.SingleActivity;
 import c.ponom.pocketlibrary.View.ViewModels.LoadedListViewModel;
 
 public class LoadedListFragment extends Fragment {
@@ -46,9 +46,9 @@ public class LoadedListFragment extends Fragment {
         View view = inflater.inflate(R.layout.book_list_loaded, container, false);
         //binding =DataBindingUtil.inflate(inflater,R.layout.book_list_loaded,container,false);
         final BookAdapter loadedListAdapter =new BookAdapter();
-        MainActivity mainActivity= ((MainActivity) view.getContext());
-        mainActivity.setNewTitle("Book shelf","");
-        mainActivity.setBackVisibility(true);
+        SingleActivity singleActivity = ((SingleActivity) view.getContext());
+        singleActivity.setNewTitle("Book shelf","");
+        singleActivity.setBackVisibility(true);
         mViewModel = ViewModelProviders.of(this).get(LoadedListViewModel.class);
         final TextView sizeInKb=view.findViewById(R.id.totalSize);
         mViewModel.initViewModel();
