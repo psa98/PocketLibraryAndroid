@@ -3,12 +3,13 @@ package c.ponom.pocketlibrary.View;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,15 +17,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.analytics.FirebaseAnalytics;
-
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 
-import c.ponom.pocketlibrary.Dagger._DaggerTestClass;
 import c.ponom.pocketlibrary.Database.DaoDatabase;
 import c.ponom.pocketlibrary.Database.NetworkLoaders.HTMLCustomParsers;
 import c.ponom.pocketlibrary.Database.Repository;
@@ -40,6 +37,7 @@ import c.ponom.pocketlibrary.View.WebView.WebViewFragment;
 
 public class SingleActivity extends AppCompatActivity {
 
+
     String YandexAPI = "AOpkMF0BAAAAklyiHQQD5AL6FpeRxKCBZlBhqklDbcA2Up8AAAAAAAAAAABupmQxoJIt_0yufDgylSz2Ishx5A==";
     public static DaoDatabase database;
     public static Repository repository;
@@ -48,11 +46,13 @@ public class SingleActivity extends AppCompatActivity {
     ProgressDialog pd;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //_DaggerTestClass daggerTestClass=new _DaggerTestClass();
-        //daggerTestClass.run();
+
+
+
         pd = new ProgressDialog(this);
         setContentView(R.layout.start_screen);
     //  mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);

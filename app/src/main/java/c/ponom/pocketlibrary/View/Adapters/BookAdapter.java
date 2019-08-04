@@ -27,6 +27,7 @@ import java.io.FileOutputStream;
 import java.util.Objects;
 
 
+import javax.inject.Inject;
 
 import c.ponom.pocketlibrary.Database.Repository;
 import c.ponom.pocketlibrary.Database.RoomEntities.Book;
@@ -37,8 +38,12 @@ import c.ponom.pocketlibrary.View.SingleActivity;
 
 public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
 
-    static Repository repository;
-    Bitmap icon, icon_done;
+    private static Repository repository;
+    private Bitmap icon, icon_done;
+
+
+
+
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
 
@@ -65,6 +70,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
 
     public BookAdapter() {
         super(BookAdapter.DIFF_CALLBACK);
+        //singleActivity.databaseList();
         repository = Objects.requireNonNull(Repository.getINSTANCE(),"repository not exist!");
     }
 

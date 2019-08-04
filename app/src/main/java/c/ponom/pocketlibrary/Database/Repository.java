@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import c.ponom.pocketlibrary.Database.DAO.AuthorDAO;
 import c.ponom.pocketlibrary.Database.DAO.BookDAO;
 import c.ponom.pocketlibrary.Database.DAO.SubChapterDAO;
@@ -16,6 +19,8 @@ import c.ponom.pocketlibrary.Database.RoomEntities.Author;
 import c.ponom.pocketlibrary.Database.RoomEntities.BaseEntity;
 import c.ponom.pocketlibrary.Database.RoomEntities.Book;
 import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
+import dagger.Provides;
+
 
 
 public class Repository {
@@ -49,6 +54,11 @@ public class Repository {
                 }
             }
         }
+        return INSTANCE;
+    }
+
+
+    public  Repository getInjectedINSTANCE() {
         return INSTANCE;
     }
 

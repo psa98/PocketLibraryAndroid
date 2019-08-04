@@ -17,6 +17,9 @@ import android.view.ViewGroup;
 import java.util.List;
 
 
+import javax.inject.Inject;
+
+
 import c.ponom.pocketlibrary.Database.RoomEntities.Author;
 import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
 import c.ponom.pocketlibrary.R;
@@ -28,6 +31,7 @@ public class AuthorsListFragment extends Fragment {
 
     private AuthorsListViewModel mViewModel;
     private static SubChapter currentSubChapter;
+
 
     public  static AuthorsListFragment newInstance(SubChapter subChapter, Context context) {
         if (subChapter!=currentSubChapter) {
