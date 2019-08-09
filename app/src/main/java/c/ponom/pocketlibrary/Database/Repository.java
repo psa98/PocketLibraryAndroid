@@ -19,6 +19,7 @@ import c.ponom.pocketlibrary.Database.RoomEntities.Author;
 import c.ponom.pocketlibrary.Database.RoomEntities.BaseEntity;
 import c.ponom.pocketlibrary.Database.RoomEntities.Book;
 import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
+import c.ponom.pocketlibrary.View.SingleActivity;
 import dagger.Provides;
 
 
@@ -38,15 +39,16 @@ public class Repository {
         private static BookDAO mBookDAO;
         private static SubChapterDAO mSubChapterDAO;
         // класс реализуется как синглтон, так что мы можем позволить себе использовать статические ссылки
-        // они нужны для работы с AsyncTask. Проблема уйдет по мере
+        // они нужны для работы с AsyncTask.
         // todo переписать с асинков на экзекьюторы?
-        private LiveData<List<SubChapter>> mAllSubChapterLiveList;
         private static HashMap<String, Bundle> webViewState = new HashMap<>();
 
+    SingleActivity singleActivity;
 
 
 
-    public static Repository getRepository(final Application application) {
+
+    public  static Repository getRepository(final Application application) {
         if (INSTANCE == null) {
             synchronized (Repository.class) {
                 if (INSTANCE == null) {
@@ -58,9 +60,6 @@ public class Repository {
     }
 
 
-    public  Repository getInjectedINSTANCE() {
-        return INSTANCE;
-    }
 
 
     public static Repository getINSTANCE() {
@@ -82,7 +81,9 @@ public class Repository {
 
 
         public LiveData<List<Book>> getBooksForAuthorAndSubChapter(Author author)
-        {return mBookDAO.getBooksByAuthorAndChapterLiveData(author.authorName,author.subChapterName);}
+        {   SingleActivity singleActivity;
+
+            return mBookDAO.getBooksByAuthorAndChapterLiveData(author.authorName,author.subChapterName);}
 
 
         public LiveData<List<Author>> getAuthorsForSubChapter(SubChapter subChapter)
@@ -132,7 +133,7 @@ public class Repository {
     }
 
     public Bundle loadWebState(String name) {
-        // todo - можно сохранять этот набор в базе или Gson каждый раз и подгружать при запуске
+
         return webViewState.get(name);
 
     }
@@ -140,7 +141,6 @@ public class Repository {
 
 
     private static  class clearTableAsyncTask extends AsyncTask<Class, Void, Void> {
-
 
         @Override
         protected Void doInBackground(final Class... classes) {
@@ -169,7 +169,8 @@ public class Repository {
 
 
     private static  class insertAsyncTaskAll extends AsyncTask<BaseEntity, Void, Void> {
-
+        // todo - оставить возможность передать в задачу массив сразу
+        //  такая замена должна сработать -> Author[]) params, надо только протестировать
 
             @Override
             protected Void doInBackground(final BaseEntity... params) {
@@ -218,10 +219,6 @@ public class Repository {
 
 
     }
-
-
-
-
 
 
 }

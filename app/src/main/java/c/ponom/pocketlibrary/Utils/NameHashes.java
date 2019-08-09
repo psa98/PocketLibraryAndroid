@@ -17,6 +17,8 @@ public class NameHashes {
         return nameDigest(stringToHash).substring(0,20);
     }
 
+    // полистать литературу на тему синхронизации - тут теоретически синхронизации метода мало может быть,
+    // надежнее добывать новый метод
     public synchronized static String nameDigest (String stringToHash){
         //цель - несколько укоротить длину имени + развязать общедоступные данные в базе от реального Uid
         // Fbase пользователя и/или его почты, которая там не хранится

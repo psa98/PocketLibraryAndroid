@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 
+import c.ponom.pocketlibrary.DI.App;
+import c.ponom.pocketlibrary.DI.DI;
 import c.ponom.pocketlibrary.Database.DaoDatabase;
 import c.ponom.pocketlibrary.Database.NetworkLoaders.HTMLCustomParsers;
 import c.ponom.pocketlibrary.Database.Repository;
@@ -46,13 +48,16 @@ public class SingleActivity extends AppCompatActivity {
     ProgressDialog pd;
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.getApplicationComponent().getActivitiesModule().removeSingleActivity();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
+        App.getApplicationComponent().getActivitiesModule().registerSingleActivity(this);
         pd = new ProgressDialog(this);
         setContentView(R.layout.start_screen);
     //  mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);

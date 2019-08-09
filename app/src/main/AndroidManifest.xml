@@ -7,12 +7,12 @@
 
     <application
         android:allowBackup="true"
+        android:name=".DI.App"
         android:icon="@mipmap/ic_launcher_big"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_big_round"
         android:supportsRtl="true"
-
-        android:theme="@style/AppTheme">
+         android:theme="@style/AppTheme">
         <activity android:name="c.ponom.pocketlibrary.View.SingleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -98,9 +98,7 @@ public class AuthorsListAdapter extends ListAdapter<Author, AuthorsListAdapter.A
                 @Override
                 public boolean areContentsTheSame(
                         @NonNull Author oldItem, @NonNull Author newItem) {
-                    // NOTE: if you use equals, your object must properly override Object#equals()
-                    // Incorrectly returning false here will result in too many animations.
-                    return oldItem.subChapterName.equals(newItem.subChapterName)&&
+                       return oldItem.subChapterName.equals(newItem.subChapterName)&&
                             oldItem.url.equals(newItem.url)&&
                             (oldItem.isLoaded==newItem.isLoaded)
 

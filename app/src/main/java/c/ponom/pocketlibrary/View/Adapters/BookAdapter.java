@@ -50,8 +50,9 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         @Override
         public void onClick(View view) {
         Book book= (Book) view.getTag();
-        view.setClickable(false);//это чтобы убрать возможность двойного клика
-            loadBookAndShow(book,view.getContext());
+        view.setClickable(false);
+        //это чтобы убрать возможность двойного клика
+        loadBookAndShow(book,view.getContext());
         }
     };
 
@@ -60,10 +61,9 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
 
         @Override
         public boolean onLongClick(View view) {
-            Book book= (Book) view.getTag();
-            //Toast.makeText(view.getContext(),"Longclick! "+book.sizeInKb,Toast.LENGTH_SHORT).show();
-            // todo тут будет вызываться удаление файла, обнуление полей записи размер и путь - после вызова контекстного меню
-            return true;
+        Book book= (Book) view.getTag();
+        // todo тут будет вызываться удаление файла, обнуление полей записи размер и путь - после вызова контекстного меню
+        return true;
         }
     };
 

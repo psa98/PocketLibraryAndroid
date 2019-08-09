@@ -1,23 +1,40 @@
 package c.ponom.pocketlibrary.View.WebView;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import c.ponom.pocketlibrary.DI.App;
+import c.ponom.pocketlibrary.DI.ApplicationComponent;
+import c.ponom.pocketlibrary.DI.DI;
+import c.ponom.pocketlibrary.Database.DaoDatabase;
 import c.ponom.pocketlibrary.Database.Repository;
 import c.ponom.pocketlibrary.View.SingleActivity;
 
 public class WebCustomWebViewClient extends WebViewClient {
     private Repository repository;
+
+    SingleActivity singleActivity;
+    DaoDatabase daoDatabase;
+
+
     WebCustomWebViewClient() {
         super();
+        //singleActivity= DI.injectSingleActivity();
+        repository=DI.injectRepository();
+        //daoDatabase=DI.injectDaoDatabase();
+        //SharedPreferences sharedPreferences=DI.injectSharedPrefModule();
+
+
     }
+
 
     @Override
     public void onLoadResource(WebView view, String url) {
         super.onLoadResource(view, url);
-        repository=Repository.getRepository((Application) view.getContext().getApplicationContext());
+        //repository=Repository.getRepository((Application) view.getContext().getApplicationContext());
 
     }
 
