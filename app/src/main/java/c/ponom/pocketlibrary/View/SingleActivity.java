@@ -23,7 +23,7 @@ import java.util.Objects;
 
 
 import c.ponom.pocketlibrary.DI.App;
-import c.ponom.pocketlibrary.DI.DI;
+import c.ponom.pocketlibrary.DI.DIclass;
 import c.ponom.pocketlibrary.Database.DaoDatabase;
 import c.ponom.pocketlibrary.Database.NetworkLoaders.HTMLCustomParsers;
 import c.ponom.pocketlibrary.Database.Repository;
@@ -57,12 +57,12 @@ public class SingleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getApplicationComponent().getActivitiesModule().registerSingleActivity(this);
+        App.getApplicationComponent().getActivitiesModule().injectSingleActivity(this);
         pd = new ProgressDialog(this);
         setContentView(R.layout.start_screen);
     //  mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         database = DaoDatabase.getDatabase(this);
-        repository=Repository.getRepository(this.getApplication());
+        repository= DIclass.getRepository();
         toolbar =findViewById(R.id.main_toolbar);
         toolbar.inflateMenu(R.menu.menus);
         //int a =2/0; //test error
@@ -87,7 +87,6 @@ public class SingleActivity extends AppCompatActivity {
     public void showMainFragment() {
         final Fragment fragment = SubChaptersFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.mainViewPager,fragment)
-              //  .addToBackStack(null)
                 .commit();
     }
 
@@ -149,7 +148,6 @@ public class SingleActivity extends AppCompatActivity {
 
      public static void loadChapterList(final Context context){
         RequestQueue queue = Volley.newRequestQueue(context);
-        //final TextView textView = findViewById(R.id.errorText);
 
        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://lib.ru/",
                 new Response.Listener<String>() {

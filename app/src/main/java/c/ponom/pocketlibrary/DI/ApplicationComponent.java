@@ -13,7 +13,7 @@ public class ApplicationComponent {
     private  static Application application;
 
 
-    public static Application getApplication() {
+    public  Application getApplication() {
         return application;
     }
 

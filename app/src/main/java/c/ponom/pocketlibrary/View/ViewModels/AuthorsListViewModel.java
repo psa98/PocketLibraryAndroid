@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 
+import c.ponom.pocketlibrary.DI.DIclass;
 import c.ponom.pocketlibrary.Database.Repository;
 import c.ponom.pocketlibrary.Database.RoomEntities.Author;
 import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
@@ -21,7 +22,7 @@ public class AuthorsListViewModel extends AndroidViewModel {
 
     public AuthorsListViewModel(Application application) {
         super(application);
-        mRepository = Repository.getRepository(application);
+        mRepository = DIclass.getRepository();
 
     }
 

@@ -17,7 +17,7 @@ static  SingleActivity singleActivity;
 
 
 
-        public void  registerSingleActivity(SingleActivity activity){
+        public void injectSingleActivity(SingleActivity activity){
             singleActivity=activity;
 
         }
@@ -27,7 +27,7 @@ static  SingleActivity singleActivity;
         }
 
 
-        public SingleActivity getSingleActivity() {
+        SingleActivity getSingleActivity() {
         return singleActivity;
         }
 }

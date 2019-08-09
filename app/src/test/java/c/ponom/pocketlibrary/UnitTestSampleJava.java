@@ -13,6 +13,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
+import c.ponom.pocketlibrary.DI.DIclass;
 import c.ponom.pocketlibrary.Database.NetworkLoaders.HTMLCustomParsers;
 import c.ponom.pocketlibrary.Database.Repository;
 import c.ponom.pocketlibrary.Database.RoomEntities.Author;
@@ -45,7 +46,7 @@ public class UnitTestSampleJava {
 
             Repository repository;
             Application application= (Application) context.getApplicationContext();
-            repository = Repository.getRepository(application);
+            repository = DIclass.getRepository();
             assertNotNull(repository);
             assertNotNull(application);
 

@@ -32,7 +32,7 @@ static ApplicationComponent applicationComponent;
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
     //    if (activity.getClass() == SingleActivity.class) - разобраться когда и как это вызывается
-    //    applicationComponent.getActivitiesModule().registerSingleActivity((SingleActivity) activity);
+    //    applicationComponent.getActivitiesModule().injectSingleActivity((SingleActivity) activity);
    }
 
     @Override
