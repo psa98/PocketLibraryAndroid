@@ -4,19 +4,19 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import c.ponom.pocketlibrary.Database.Repository;
-
-public class SharedPrefModule {
 
 
+class SharedPrefModule {
 
-    SharedPreferences sharedPreferences;
 
-    public SharedPrefModule(Application application) {
+
+    private SharedPreferences sharedPreferences;
+
+    SharedPrefModule(Application application) {
         sharedPreferences  = application.getSharedPreferences("settings", Context.MODE_PRIVATE);
     }
 
-    public SharedPreferences getSharedPreferences() {
+    SharedPreferences getSharedPreferences() {
         return sharedPreferences;
     }
 }

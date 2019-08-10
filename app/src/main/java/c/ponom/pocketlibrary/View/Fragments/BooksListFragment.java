@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import c.ponom.pocketlibrary.DI.DIclass;
 import c.ponom.pocketlibrary.Database.RoomEntities.Author;
 import c.ponom.pocketlibrary.Database.RoomEntities.Book;
 import c.ponom.pocketlibrary.R;
@@ -27,9 +28,9 @@ public class BooksListFragment extends Fragment {
 
     private static Author currentAuthor;
 
-
     public  static BooksListFragment newInstance(Author author, Context context) {
         currentAuthor = author;
+
          return new BooksListFragment();
     }
 
@@ -44,10 +45,10 @@ public class BooksListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.book_list, container, false);
+        SingleActivity singleActivity= DIclass.getSingleActivity();
         final BookAdapter bookAdapter=new BookAdapter();
-        String currentTitle = String.format("%s, %s", currentAuthor.subChapterName, currentAuthor.authorName);
-        ((SingleActivity) getContext()).setNewTitle(currentAuthor.subChapterName,currentAuthor.authorName);
-        ((SingleActivity) getContext()).setBackVisibility(true);
+        singleActivity.setNewTitle(currentAuthor.subChapterName,currentAuthor.authorName);
+        singleActivity.setBackButtonVisibility(true);
         BooksListViewModel mViewModel = ViewModelProviders.of(this).get(BooksListViewModel.class);
         mViewModel.initViewModel(currentAuthor);
         mViewModel.getBookList().observe(this, new Observer<List<Book>>() {

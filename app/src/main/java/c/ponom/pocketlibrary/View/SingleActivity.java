@@ -1,31 +1,19 @@
 package c.ponom.pocketlibrary.View;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import java.util.ArrayList;
 import java.util.Objects;
-
 
 import c.ponom.pocketlibrary.DI.App;
 import c.ponom.pocketlibrary.DI.DIclass;
-import c.ponom.pocketlibrary.Database.DaoDatabase;
-import c.ponom.pocketlibrary.Database.NetworkLoaders.HTMLCustomParsers;
+import c.ponom.pocketlibrary.Database.NetworkLoaders.NetworkLoaders;
 import c.ponom.pocketlibrary.Database.Repository;
 import c.ponom.pocketlibrary.Database.RoomEntities.Author;
 import c.ponom.pocketlibrary.Database.RoomEntities.Book;
@@ -40,9 +28,8 @@ import c.ponom.pocketlibrary.View.WebView.WebViewFragment;
 public class SingleActivity extends AppCompatActivity {
 
 
-    String YandexAPI = "AOpkMF0BAAAAklyiHQQD5AL6FpeRxKCBZlBhqklDbcA2Up8AAAAAAAAAAABupmQxoJIt_0yufDgylSz2Ishx5A==";
-    public static DaoDatabase database;
-    public static Repository repository;
+    //String YandexAPI = "AOpkMF0BAAAAklyiHQQD5AL6FpeRxKCBZlBhqklDbcA2Up8AAAAAAAAAAABupmQxoJIt_0yufDgylSz2Ishx5A==";
+    Repository repository;
     Toolbar toolbar=null;
   //  private FirebaseAnalytics mFirebaseAnalytics;
     ProgressDialog pd;
@@ -61,7 +48,6 @@ public class SingleActivity extends AppCompatActivity {
         pd = new ProgressDialog(this);
         setContentView(R.layout.start_screen);
     //  mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        database = DaoDatabase.getDatabase(this);
         repository= DIclass.getRepository();
         toolbar =findViewById(R.id.main_toolbar);
         toolbar.inflateMenu(R.menu.menus);
@@ -78,24 +64,15 @@ public class SingleActivity extends AppCompatActivity {
          toolbar.setTitle("");
 
         if (savedInstanceState==null) {
-            loadChapterList(this);
+            // todo - вообще это потенциально глючно, проверить что будет если запустить
+            //  пустое приложение без сети, потом восстановить его при включенной сети - вроде тогда загрузка
+            //  не вызовется.  Надо другой метод придумать
+            NetworkLoaders.loadChapterList();
             showMainFragment();
         }
 
     }
 
-    public void showMainFragment() {
-        final Fragment fragment = SubChaptersFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(R.id.mainViewPager,fragment)
-                .commit();
-    }
-
-    public void showLoadedListFragment() {
-        final Fragment fragment = LoadedListFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(R.id.mainViewPager,fragment)
-                 .addToBackStack(null)
-                .commit();
-    }
 
 
     @Override
@@ -103,8 +80,6 @@ public class SingleActivity extends AppCompatActivity {
         super.onResume();
         toolbar.setTitle("");
     }
-
-
 
 
     @Override
@@ -123,7 +98,7 @@ public class SingleActivity extends AppCompatActivity {
                 break;
             }
             case R.id.action_about_item: {
-                // todo - вызов обработчика
+                // todo - вызов обработчика будет тут
                 break;
             }
 
@@ -137,86 +112,34 @@ public class SingleActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    public void showProgressDialog (){
+        pd.setTitle(this.getString(R.string.pleasewait));
+        pd.setMessage("");
+        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pd.setIndeterminate(true);
+        pd.show();
+    }
+    public void hideProgressDialog(){
+        pd.dismiss();
+    }
+
     public void setNewTitle(String title, String subtitle){
         if (toolbar == null) {
             return;
         }
-        toolbar.setSubtitle(subtitle);
         toolbar.setTitle(title);
+        toolbar.setSubtitle(subtitle);
+
     }
 
+    public void setBackButtonVisibility(boolean status) {
 
-     public static void loadChapterList(final Context context){
-        RequestQueue queue = Volley.newRequestQueue(context);
 
-       StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://lib.ru/",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        HTMLCustomParsers.parseMainPage(response);
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-        queue.add(stringRequest);
+        Objects.requireNonNull(getSupportActionBar()).
+                setDisplayHomeAsUpEnabled(status);
+        getSupportActionBar().setHomeButtonEnabled(status);
     }
-
-
-
-    public static void loadAuthorsList(final SubChapter subChapter, final Context context){
-        //todo - определиться что делать c контекстом и вообще этими методами.
-        // И еще  с проверкой на наличие как связи на момент вызова, так и скачанного и распарсенного ранее
-        RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, subChapter.url,
-                new Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String response) {
-                        ArrayList<Author> parsedSubChapter= HTMLCustomParsers.parseSubChapter(response,subChapter);
-                        //в принципе этот список не особо нужен.
-                        //Хотя в принципе можно в статусной строке вывести число позиций тут и аналогично в других уровнях
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-        queue.add(stringRequest);
-    }
-
-
-
-    public static void loadBooksList (final Author author, final Context context){
-        //todo - определиться что делать c контекстом и вообще этими методами.
-        // И еще  с проверкой на наличие как связи на момент вызова, так и скачанного и распарсенного ранее
-        RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, author.url,
-                new Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String response) {
-                        HTMLCustomParsers.parseAuthorInSubChapter(response, author,author.url);
-                        //в принципе этот список не особо нужен.
-                        //Хотя в принципе можно в статусной строке вывести число позиций тут и аналогично в других уровнях
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-        queue.add(stringRequest);
-    }
-
-
-
 
     public void showAuthorsListForSubChapter(SubChapter subChapter) {
 
@@ -228,14 +151,6 @@ public class SingleActivity extends AppCompatActivity {
 
     }
 
-
-    public void setBackVisibility(boolean status) {
-
-
-        Objects.requireNonNull(getSupportActionBar()).
-                setDisplayHomeAsUpEnabled(status);
-        getSupportActionBar().setHomeButtonEnabled(status);
-    }
 
     public void showBooksForSubChapterAuthor(Author author) {
 
@@ -259,37 +174,42 @@ public class SingleActivity extends AppCompatActivity {
 
     }
 
-    public void showProgressDialog (){
-        pd.setTitle("Please wait");
-        pd.setMessage("");
-        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        pd.setIndeterminate(true);
-        pd.show();
+
+    public void showMainFragment() {
+        final Fragment fragment = SubChaptersFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainViewPager,fragment)
+                .commit();
     }
-    public void hideProgressDialog(){
-        pd.dismiss();
+
+    public void showLoadedListFragment() {
+        final Fragment fragment = LoadedListFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainViewPager,fragment)
+                .addToBackStack(null)
+                .commit();
     }
+
+
 
 
     /* глобальные задачи
     todo рисование нормальных списков по Материал.
     реализовано вызов webView переделать на загрузку файла в дата каталог и открытие Вебвью для него
     отменено  Добавить кнопку загрузки всех произведений для уровня "авторы"
-    todo добавить поле "загружено" в базу книг, кнопку/иконку  "загрузить" в списке, чекбокс или иную выборку для удаления
-         загруженного
+    todo добавить чекбокс или иную выборку для удаления  загруженного
 
 
     отлоожено - такие разделы просто пока будут игнорироваться
      переделка структуры базы данных на последнем уровне - под возможность работы с html и ссылками на az и другое плюс
-    todo список исключаемых подразделов первого уровня
+    сделано  список исключаемых подразделов первого уровня
     исключено - там все одно другие размеры чем на диске победить в регулярке размеры файла, построить пересчет их вверх по иерарархи
     реализовано  определиться с отображением текстового файла - возможно стоит перейти на html (если оно поддерживается вообще)
     реализовано  подготовить загрузку текстовых файлов (блоб? или все таки толпа файлов?)
     todo сделать уникальный индекс для базы книг (раздел, автор, название) и вообще пересмотреть индексы
     реализовано  перетасовать все по подразделам (модели, адаптеры, фрагменты, активности)
     todo переделать вызов базовой активности из фрагментов - на прямое общение фрагментов или на интерфейсы?
-    todo объединить загрузку и вызов парсеров в одном модуле
-    todo реализовать использование dagger - с хранением параметров и общих данных (контеста или хотя бы ссылок на репозиториии, базу)
+    сделано  объединить загрузку и вызов парсеров в одном модуле/пакете
+    сделано без даггера  реализовать использование dagger - с хранением параметров и общих данных
+    (контеста или хотя бы ссылок на репозиториии, базу)
     todo подготовить фрагмент с информацией о программе, лицензиями
     реализовано  убрать из интерфейсов DAO, базы данных  все лишнее
     todo переписать асинкТаски на что-то посовременннее. В учебных целях. Вероятно экзекьюторы все же.
@@ -299,32 +219,12 @@ public class SingleActivity extends AppCompatActivity {
     todo обеспечить минимальный набор проверок при парсинге
     реализовано  обеспечить вывод сообщений об ошибках связи
     todo минимальная обработка полей WebView. Обеспечить невозможность выхода за пределы домена
-    todo - посмотреть почему местами не убирается <b>
+    сделано, убрано - посмотреть почему местами не убирается <b>
     сделано кроме удаления   - реализовать экран-список уже загруженных файлов, просмотр их и исключение с удалением.
-    todo после того как зафиксировано развитие репозитория - написать для него юнит-тесты, или хотя бы андроид-тесты
+    сделано  после того как зафиксировано развитие репозитория - написать для него юнит-тесты, или хотя бы андроид-тесты
     отменено - излишнее - для парсеров - написать юнит тест, грузящий рекрурсивно всю либу.
-    todo - вариант использовать custom
-
-
-
     отменено  - добавить транзакции для массовых записей - типа такого
     причина - целостность базы интересует мало, поскольку она постояно подзагружается, а единственная массовая операция у нас - удаление
-
-    @Dao
-abstract class UserDao {
-
-    @Transaction
-    open fun updateData(users: List<User>) {
-        deleteAllUsers()
-        insertAll(users)
-    }
-    @Insert
-    abstract fun insertAll(users: List<User>)
-    @Query("DELETE FROM Users")
-    abstract fun deleteAllUsers()
-}
-
-
 
 
 
@@ -338,10 +238,11 @@ abstract class UserDao {
 
     /*
     Задачи - освоение и использование следующего стека технологий:
-    dagger 2; - в финальном варианте будет.
+    dagger 2; - заменено на самописный DI
     room; - вроде разобрался. и с концепцией репозитария тоже
     rx - рановато, и тема проекта не оптимальная
-    MVVM+lifedata - в одну сторону разобрался, осталось сделать автоматически меняющиеся данные (в обе стороны?) поле и вызов из Вью
+    MVVM+lifedata - в одну сторону разобрался, осталось сделать автоматически меняющиеся данные (в обе стороны?)
+    поле и вызов из Вью
     retrofit - заменено пока на volley.
     Впрочем, можно попробовать последний уровень им разобрать
 

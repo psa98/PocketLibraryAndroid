@@ -26,6 +26,8 @@ public class SubChapterAdapter extends ListAdapter<SubChapter, SubChapterAdapter
         //слушатель один - и он всегда берет данные из тега кликнутого вью
         @Override
         public void onClick(View view) {
+            view.setClickable(false);
+            view.setBackgroundColor(0xffeeeeee);
             SubChapter subChapter = ((SubChapter) view.getTag());
             ((SingleActivity) view.getContext()).showAuthorsListForSubChapter (subChapter);
 

@@ -17,9 +17,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 
-import javax.inject.Inject;
-
-
+import c.ponom.pocketlibrary.DI.DIclass;
 import c.ponom.pocketlibrary.Database.RoomEntities.Author;
 import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
 import c.ponom.pocketlibrary.R;
@@ -29,14 +27,13 @@ import c.ponom.pocketlibrary.View.ViewModels.AuthorsListViewModel;
 
 public class AuthorsListFragment extends Fragment {
 
-    private AuthorsListViewModel mViewModel;
     private static SubChapter currentSubChapter;
 
 
     public  static AuthorsListFragment newInstance(SubChapter subChapter, Context context) {
-        if (subChapter!=currentSubChapter) {
+
             currentSubChapter = subChapter;
-       }
+
            return new AuthorsListFragment();
     }
 
@@ -51,9 +48,11 @@ public class AuthorsListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
        View view = inflater.inflate(R.layout.authors_list_in_subchapter, container, false);
         final AuthorsListAdapter authorsListAdapter =new AuthorsListAdapter();
-        ((SingleActivity) getContext()).setNewTitle(currentSubChapter.subChapterName,"");
-        ((SingleActivity) getContext()).setBackVisibility(true);
-        mViewModel = ViewModelProviders.of(this).get(AuthorsListViewModel.class);
+        SingleActivity singleActivity= DIclass.getSingleActivity();
+
+        singleActivity.setNewTitle(currentSubChapter.subChapterName,"");
+        singleActivity.setBackButtonVisibility(true);
+        AuthorsListViewModel mViewModel = ViewModelProviders.of(this).get(AuthorsListViewModel.class);
         mViewModel.initViewModel(currentSubChapter);
         mViewModel.getAuthorsListForSubChapter().observe(this, new Observer<List<Author>>() {
             @Override

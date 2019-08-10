@@ -8,10 +8,12 @@ import java.util.List;
 
 
 import c.ponom.pocketlibrary.DI.DIclass;
+import c.ponom.pocketlibrary.Database.NetworkLoaders.NetworkLoaders;
 import c.ponom.pocketlibrary.Database.Repository;
 import c.ponom.pocketlibrary.Database.RoomEntities.Author;
 import c.ponom.pocketlibrary.Database.RoomEntities.Book;
-import c.ponom.pocketlibrary.View.SingleActivity;
+
+
 
 public class BooksListViewModel extends AndroidViewModel {
 
@@ -26,8 +28,8 @@ public class BooksListViewModel extends AndroidViewModel {
     }
 
     public void initViewModel(Author author){
-        
-    SingleActivity.loadBooksList (author,this.getApplication().getApplicationContext());
+
+    NetworkLoaders.loadBooksList (author);
 
     mBookList=mRepository.getBooksForAuthorAndSubChapter(author);
     //случай, когда автора два в разных разделах у нас решен просто - показываем все его книги

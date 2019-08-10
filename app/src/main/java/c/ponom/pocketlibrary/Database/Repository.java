@@ -1,17 +1,14 @@
 package c.ponom.pocketlibrary.Database;
 
-import android.app.Application;
-import androidx.lifecycle.LiveData;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.lifecycle.LiveData;
 
 import java.util.HashMap;
 import java.util.List;
 
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
+import c.ponom.pocketlibrary.DI.DIclass;
 import c.ponom.pocketlibrary.Database.DAO.AuthorDAO;
 import c.ponom.pocketlibrary.Database.DAO.BookDAO;
 import c.ponom.pocketlibrary.Database.DAO.SubChapterDAO;
@@ -19,15 +16,10 @@ import c.ponom.pocketlibrary.Database.RoomEntities.Author;
 import c.ponom.pocketlibrary.Database.RoomEntities.BaseEntity;
 import c.ponom.pocketlibrary.Database.RoomEntities.Book;
 import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
-import c.ponom.pocketlibrary.View.SingleActivity;
-import dagger.Provides;
 
 
 
 public class Repository {
-
-    private static Repository INSTANCE;
-
 
 
     /**
@@ -38,36 +30,15 @@ public class Repository {
         private static AuthorDAO mAuthorDAO;
         private static BookDAO mBookDAO;
         private static SubChapterDAO mSubChapterDAO;
-        // класс реализуется как синглтон, так что мы можем позволить себе использовать статические ссылки
-        // они нужны для работы с AsyncTask.
+
         // todo переписать с асинков на экзекьюторы?
         private static HashMap<String, Bundle> webViewState = new HashMap<>();
 
-    SingleActivity singleActivity;
 
 
 
-
-    public  static Repository getRepository(final Application application) {
-        if (INSTANCE == null) {
-            synchronized (Repository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new Repository(application);
-                }
-            }
-        }
-        return INSTANCE;
-    }
-
-
-
-
-    public static Repository getINSTANCE() {
-        return INSTANCE;
-    }
-
-    private Repository(Application application) {
-            DaoDatabase db = DaoDatabase.getDatabase(application);
+    public Repository() {
+            DaoDatabase db = DIclass.getDaoDatabase();
             mAuthorDAO = db.getAuthorDAO();
             mBookDAO=db.getBooksDAO();
             mSubChapterDAO=db.getSubChapterDAO();
@@ -81,7 +52,7 @@ public class Repository {
 
 
         public LiveData<List<Book>> getBooksForAuthorAndSubChapter(Author author)
-        {   SingleActivity singleActivity;
+        {
 
             return mBookDAO.getBooksByAuthorAndChapterLiveData(author.authorName,author.subChapterName);}
 

@@ -20,8 +20,6 @@ public class WebCustomWebViewClient extends WebViewClient {
         super();
         //singleActivity= DIclass.getSingleActivity();
         repository= DIclass.getRepository();
-        //daoDatabase=DIclass.injectDaoDatabase();
-        //SharedPreferences sharedPreferences=DIclass.getSharedPrefModule();
 
 
     }
@@ -30,7 +28,6 @@ public class WebCustomWebViewClient extends WebViewClient {
     @Override
     public void onLoadResource(WebView view, String url) {
         super.onLoadResource(view, url);
-        //repository=Repository.getRepository((Application) view.getContext().getApplicationContext());
 
     }
 

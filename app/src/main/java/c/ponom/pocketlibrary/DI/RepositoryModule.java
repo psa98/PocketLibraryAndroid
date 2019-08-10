@@ -1,14 +1,13 @@
 package c.ponom.pocketlibrary.DI;
 
-import android.app.Application;
 
 import c.ponom.pocketlibrary.Database.Repository;
 
 public class RepositoryModule {
-    Repository repository;
+    private Repository repository;
 
-    public RepositoryModule(Application application) {
-    repository = Repository.getRepository(application);
+    RepositoryModule() {
+    repository = new Repository();
     }
 
     public Repository getRepository() {

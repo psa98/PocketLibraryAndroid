@@ -4,14 +4,14 @@ import android.app.Application;
 
 import c.ponom.pocketlibrary.Database.DaoDatabase;
 
-public class DatabaseModule {
-    DaoDatabase daoDatabase;
+class DatabaseModule {
+    private DaoDatabase daoDatabase;
 
-    public DaoDatabase getDaoDatabase() {
+    DaoDatabase getDaoDatabase() {
         return daoDatabase;
     }
 
-     DatabaseModule(Application application) {
+    DatabaseModule(Application application) {
         daoDatabase =DaoDatabase.getDatabase(application);
     }
 }

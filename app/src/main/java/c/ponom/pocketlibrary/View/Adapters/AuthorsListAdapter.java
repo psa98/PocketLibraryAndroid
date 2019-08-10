@@ -25,7 +25,10 @@ public class AuthorsListAdapter extends ListAdapter<Author, AuthorsListAdapter.A
         @Override
         public void onClick(View view) {
             Author author= (Author) view.getTag();
+
             if ( !author.url.contains(".txt")) {
+                view.setClickable(false);
+                view.setBackgroundColor(0xffeeeeee);
                 ((SingleActivity) view.getContext()).showBooksForSubChapterAuthor(author);
             }else
             // - отдельные "авторы" на самом деле представляют собой ссылку на файл, а не на каталог.

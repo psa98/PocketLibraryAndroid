@@ -13,11 +13,20 @@ public class ApplicationComponent {
     private  static Application application;
 
 
+    /* внутри данного компонента хранятся ссылки на создаваемые модули, которым может быть
+     потребен контекст приложения в целом  и которые имеют время жизни совпадающее с приложением в целом
+    - репозиторий,
+    - база данных.
+    - объект доступа к настройкам приложения (shared)
+    Данный же компонент осуществляет их инициализацию при первом вызове
+    */
+
+
     public  Application getApplication() {
         return application;
     }
 
-    public static ApplicationComponent getInstance(final Application application)
+    static ApplicationComponent getInstance(final Application application)
     {
         if (INSTANCE == null) {
             synchronized (ApplicationComponent.class) {
@@ -30,26 +39,26 @@ public class ApplicationComponent {
     }
 
 
-    public ApplicationComponent(Application currentApplication) {
+    private ApplicationComponent(Application currentApplication) {
         application=currentApplication;
     }
 
 
-    public   RepositoryModule getRepositoryModule(){
-        if (repositoryModule!=null) return repositoryModule; else return new RepositoryModule(application);
+    synchronized RepositoryModule getRepositoryModule(){
+        if (repositoryModule!=null) return repositoryModule; else return new RepositoryModule();
 
     }
 
-    public   DatabaseModule getDatabaseModule(){
+    synchronized DatabaseModule getDatabaseModule(){
         if (databaseModule!=null) return databaseModule; else return new DatabaseModule(application);
 
     }
 
-    public   ActivitiesModule getActivitiesModule(){
+    synchronized public   ActivitiesModule getActivitiesModule(){
         if (activitiesModule!=null) return activitiesModule; else return new ActivitiesModule();
     }
 
-    public   SharedPrefModule getSharedPrefModule(){
+    synchronized SharedPrefModule getSharedPrefModule(){
         if (sharedPrefModule!=null) return sharedPrefModule; else return new SharedPrefModule(application);
       }
 

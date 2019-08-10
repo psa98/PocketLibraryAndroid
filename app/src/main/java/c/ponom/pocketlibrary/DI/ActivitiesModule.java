@@ -1,18 +1,16 @@
 package c.ponom.pocketlibrary.DI;
 
-import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
+
 
 import c.ponom.pocketlibrary.View.SingleActivity;
 
 public class ActivitiesModule {
 
 
-static  SingleActivity singleActivity;
+private static  SingleActivity singleActivity;
         // todo SecondActivity secondActivity;
         // зарезервировано для хранения активностей во время когда ссылки на них действительны, а так же объектов,
-        // существование которых тесно связано с ЖЦ активности
+        // существование которых тесно связано с ЖЦ активности - фрагментов к примеру.
 
 
 
@@ -25,6 +23,9 @@ static  SingleActivity singleActivity;
         public void removeSingleActivity(){
             singleActivity=null;
         }
+        // вызывается в onDestroy. В принципе, можно вызывать в onStop, а инжектировть в onStart|onResume,
+        // это будет более fail fast  в плане отладки
+
 
 
         SingleActivity getSingleActivity() {

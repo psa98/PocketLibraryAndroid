@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import c.ponom.pocketlibrary.DI.DIclass;
 import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
 import c.ponom.pocketlibrary.R;
 import c.ponom.pocketlibrary.View.Adapters.SubChapterAdapter;
@@ -24,8 +25,6 @@ import c.ponom.pocketlibrary.View.ViewModels.SubChaptersViewModel;
 
 
 public class SubChaptersFragment extends Fragment {
-
-    private SubChaptersViewModel viewModel;
 
 
     public static SubChaptersFragment newInstance() {
@@ -43,10 +42,12 @@ public class SubChaptersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        viewModel = ViewModelProviders.of(this).get(SubChaptersViewModel.class);
+        SubChaptersViewModel viewModel = ViewModelProviders.of(this).get(SubChaptersViewModel.class);
         View view = inflater.inflate(R.layout.subchapter_list, container, false);
-        ((SingleActivity) getContext()).setNewTitle("","");
-        ((SingleActivity) getContext()).setBackVisibility(false);
+        SingleActivity singleActivity = DIclass.getSingleActivity();
+
+        singleActivity.setNewTitle("","");
+        singleActivity.setBackButtonVisibility(false);
 
 
         final SubChapterAdapter subChapterAdapter=new SubChapterAdapter();

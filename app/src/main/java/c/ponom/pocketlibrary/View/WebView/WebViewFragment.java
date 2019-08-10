@@ -57,7 +57,7 @@ public class WebViewFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.web_content_scrolling, container, false);
         ((SingleActivity) getContext()).setNewTitle(currentBook.authorName,currentBook.bookName);
-        ((SingleActivity) getContext()).setBackVisibility(true);
+        ((SingleActivity) getContext()).setBackButtonVisibility(true);
         webView =  view.findViewById(R.id.webViewMain);
         webView.setWebViewClient(new WebCustomWebViewClient());
         String stringToRead = loadSavedFile(this.getContext(), currentFileName);

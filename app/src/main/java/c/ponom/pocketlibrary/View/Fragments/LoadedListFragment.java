@@ -17,6 +17,7 @@ import android.widget.TextView;
 import java.util.List;
 
 
+import c.ponom.pocketlibrary.DI.DIclass;
 import c.ponom.pocketlibrary.Database.RoomEntities.Book;
 import c.ponom.pocketlibrary.R;
 import c.ponom.pocketlibrary.View.Adapters.BookAdapter;
@@ -24,8 +25,6 @@ import c.ponom.pocketlibrary.View.SingleActivity;
 import c.ponom.pocketlibrary.View.ViewModels.LoadedListViewModel;
 
 public class LoadedListFragment extends Fragment {
-
-    private LoadedListViewModel mViewModel;
 
 
     public  static LoadedListFragment newInstance() {
@@ -46,10 +45,10 @@ public class LoadedListFragment extends Fragment {
         View view = inflater.inflate(R.layout.book_list_loaded, container, false);
         //binding =DataBindingUtil.inflate(inflater,R.layout.book_list_loaded,container,false);
         final BookAdapter loadedListAdapter =new BookAdapter();
-        SingleActivity singleActivity = ((SingleActivity) view.getContext());
+        SingleActivity singleActivity = DIclass.getSingleActivity();
         singleActivity.setNewTitle("Book shelf","");
-        singleActivity.setBackVisibility(true);
-        mViewModel = ViewModelProviders.of(this).get(LoadedListViewModel.class);
+        singleActivity.setBackButtonVisibility(true);
+        LoadedListViewModel mViewModel = ViewModelProviders.of(this).get(LoadedListViewModel.class);
         final TextView sizeInKb=view.findViewById(R.id.totalSize);
         mViewModel.initViewModel();
         mViewModel.getListOfLoadedBooks().observe(this, new Observer<List<Book>>() {

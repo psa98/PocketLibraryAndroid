@@ -29,6 +29,7 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import c.ponom.pocketlibrary.DI.DIclass;
 import c.ponom.pocketlibrary.Database.Repository;
 import c.ponom.pocketlibrary.Database.RoomEntities.Book;
 import c.ponom.pocketlibrary.R;
@@ -51,6 +52,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         public void onClick(View view) {
         Book book= (Book) view.getTag();
         view.setClickable(false);
+        view.setBackgroundColor(0xffeeeeee);
         //это чтобы убрать возможность двойного клика
         loadBookAndShow(book,view.getContext());
         }
@@ -71,7 +73,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
     public BookAdapter() {
         super(BookAdapter.DIFF_CALLBACK);
         //singleActivity.databaseList();
-        repository = Objects.requireNonNull(Repository.getINSTANCE(),"repository not exist!");
+        repository = DIclass.getRepository();
     }
 
     public static void loadBookAndShow(final Book bookToRead, final Context context) {
@@ -93,7 +95,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         new Response.Listener<String>() {
                    @Override
                     public void onResponse(String response) {
-
+                    // вырезаем заголовочный фрагмент
                     int startPosition = response.indexOf("<form action");
                     int endPosition = response.indexOf("</form>")+7;
                     String header = response.substring(0,startPosition);
@@ -105,7 +107,6 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
                     bookToRead.uriToFile=filePath;
                     bookToRead.sizeInKb=(int)(new File(filePath).length()/1024);
                     repository.updateRecord(bookToRead);
-                    //todo -  в репозиторий перенести всю работу с файлами
                     ((SingleActivity) context).launchWebView(filePath,bookToRead);
 
                     }

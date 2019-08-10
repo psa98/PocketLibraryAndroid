@@ -8,6 +8,7 @@ import java.util.List;
 
 
 import c.ponom.pocketlibrary.DI.DIclass;
+import c.ponom.pocketlibrary.Database.NetworkLoaders.NetworkLoaders;
 import c.ponom.pocketlibrary.Database.Repository;
 import c.ponom.pocketlibrary.Database.RoomEntities.Author;
 import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
@@ -30,7 +31,7 @@ public class AuthorsListViewModel extends AndroidViewModel {
 
 
         if (currentSubChapter==null||currentSubChapter!=subChapter){
-        SingleActivity.loadAuthorsList(subChapter, getApplication().getApplicationContext());
+        NetworkLoaders.loadAuthorsList(subChapter);
         mAuthorsListForSubChapter=mRepository.getAuthorsForSubChapter(subChapter);
         currentSubChapter=subChapter;
         }

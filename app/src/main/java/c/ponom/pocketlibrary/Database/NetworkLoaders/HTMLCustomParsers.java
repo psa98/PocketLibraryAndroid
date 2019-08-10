@@ -7,14 +7,14 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import c.ponom.pocketlibrary.DI.DIclass;
+import c.ponom.pocketlibrary.Database.Repository;
 import c.ponom.pocketlibrary.Database.RoomEntities.Author;
 import c.ponom.pocketlibrary.Database.RoomEntities.Book;
 import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
-import c.ponom.pocketlibrary.Database.Repository;
 
 public class HTMLCustomParsers {
 
@@ -25,7 +25,7 @@ public class HTMLCustomParsers {
     public static ArrayList<SubChapter> parseMainPage(String documentString){
 
 
-        Repository repository = Objects.requireNonNull(Repository.getINSTANCE(),"repository not exist!");
+        Repository repository = DIclass.getRepository();
         Document doc= Jsoup.parse(documentString);
         Elements links = doc.select(	"a[href~=^\\w[A-Z]+\\/{1}$");
 
@@ -91,7 +91,7 @@ public class HTMLCustomParsers {
     public static ArrayList<Author> parseSubChapter(String documentString,SubChapter currentSubChapter){
 
 
-        Repository repository = Objects.requireNonNull(Repository.getINSTANCE(),"repository not exist!");
+        Repository repository = DIclass.getRepository();
         // todo - заменить это везде на даггер
         Document doc= Jsoup.parse(documentString);
         Elements links = doc.select(	"a[href~=^\\w[A-Z]+\\/{1}$");
@@ -225,8 +225,8 @@ dir( 26 ) [  58]       Атеистическая публицистика
         return listResult;
     }
 
-    public static ArrayList<Book> parseAuthorInSubChapter(String documentString,
-                                                           Author author, String url){
+    static ArrayList<Book> parseAuthorInSubChapter(String documentString,
+                                                   Author author, String url){
         /*текущая подзадача следующая:
         на входе получаем как сейчас документ, то есть вызываем это уже асинхронно из метода загрузки что
         Возвращаем List of Books, правильно заполненный в плане имен каталогов, либо пустой список/null
@@ -234,7 +234,7 @@ dir( 26 ) [  58]       Атеистическая публицистика
          */
 
 
-        Repository repository = Objects.requireNonNull(Repository.getINSTANCE(),"repository not exist!");
+        Repository repository = DIclass.getRepository();
 
         Document doc= Jsoup.parse(documentString);
         Element body =doc.body();
