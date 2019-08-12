@@ -1,7 +1,7 @@
 package c.ponom.pocketlibrary.DI;
 
 
-import c.ponom.pocketlibrary.Database.Repository;
+import c.ponom.pocketlibrary.data.Repository;
 
 public class RepositoryModule {
     private Repository repository;

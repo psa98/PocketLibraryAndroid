@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="c.ponom.pocketlibrary.View.SingleActivity">
+    tools:context="c.ponom.pocketlibrary.ui.SingleActivity">
 
 
     <androidx.recyclerview.widget.RecyclerView

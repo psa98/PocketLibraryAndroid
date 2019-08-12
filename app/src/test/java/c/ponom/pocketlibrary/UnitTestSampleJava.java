@@ -14,11 +14,11 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.ArrayList;
 
 import c.ponom.pocketlibrary.DI.DIclass;
-import c.ponom.pocketlibrary.Database.NetworkLoaders.HTMLCustomParsers;
-import c.ponom.pocketlibrary.Database.Repository;
-import c.ponom.pocketlibrary.Database.RoomEntities.Author;
-import c.ponom.pocketlibrary.Database.RoomEntities.Book;
-import c.ponom.pocketlibrary.Database.RoomEntities.SubChapter;
+import c.ponom.pocketlibrary.data.NetworkLoaders.HTMLCustomParsers;
+import c.ponom.pocketlibrary.data.Repository;
+import c.ponom.pocketlibrary.data.RoomEntities.Author;
+import c.ponom.pocketlibrary.data.RoomEntities.Book;
+import c.ponom.pocketlibrary.data.RoomEntities.SubChapter;
 
 
 import static org.junit.Assert.assertEquals;

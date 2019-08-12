@@ -2,13 +2,13 @@ package c.ponom.pocketlibrary.DI;
 
 
 
-import c.ponom.pocketlibrary.View.SingleActivity;
+import c.ponom.pocketlibrary.ui.SingleActivity;
 
 public class ActivitiesModule {
 
 
 private static  SingleActivity singleActivity;
-        // todo SecondActivity secondActivity;
+        // SecondActivity secondActivity;
         // зарезервировано для хранения активностей во время когда ссылки на них действительны, а так же объектов,
         // существование которых тесно связано с ЖЦ активности - фрагментов к примеру.
 

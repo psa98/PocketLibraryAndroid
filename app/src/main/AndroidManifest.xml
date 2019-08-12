@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_big_round"
         android:supportsRtl="true"
          android:theme="@style/AppTheme">
-        <activity android:name="c.ponom.pocketlibrary.View.SingleActivity">
+        <activity android:name="c.ponom.pocketlibrary.ui.SingleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

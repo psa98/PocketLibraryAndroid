@@ -2,7 +2,7 @@ package c.ponom.pocketlibrary.DI;
 
 import android.app.Application;
 
-import c.ponom.pocketlibrary.Database.DaoDatabase;
+import c.ponom.pocketlibrary.data.DaoDatabase;
 
 class DatabaseModule {
     private DaoDatabase daoDatabase;
