@@ -59,7 +59,7 @@ public class AuthorsListFragment extends BaseFragment {
                 authorsListAdapter.submitList(authors);
             }
         });
-       RecyclerView recyclerView =  view.findViewById(R.id.recyclerViewAuthorsInChapter);
+        RecyclerView recyclerView =  view.findViewById(R.id.recyclerViewAuthorsInChapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(authorsListAdapter);
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),

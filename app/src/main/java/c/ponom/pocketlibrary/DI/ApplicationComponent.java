@@ -44,23 +44,40 @@ public class ApplicationComponent {
     }
 
 
-    synchronized RepositoryModule getRepositoryModule(){
-        if (repositoryModule!=null) return repositoryModule; else return new RepositoryModule();
-
-    }
-
-    synchronized DatabaseModule getDatabaseModule(){
-        if (databaseModule!=null) return databaseModule; else return new DatabaseModule(application);
-
-    }
 
     synchronized public   ActivitiesModule getActivitiesModule(){
-        if (activitiesModule!=null) return activitiesModule; else return new ActivitiesModule();
+        if (activitiesModule!=null) return activitiesModule; else
+        { activitiesModule= new ActivitiesModule();
+            return activitiesModule;
+        }
     }
 
     synchronized SharedPrefModule getSharedPrefModule(){
-        if (sharedPrefModule!=null) return sharedPrefModule; else return new SharedPrefModule(application);
-      }
+        if (sharedPrefModule!=null) return sharedPrefModule; else {
+
+            sharedPrefModule = new SharedPrefModule(application);
+            return sharedPrefModule;}
+    }
+
+
+
+
+    synchronized    RepositoryModule getRepositoryModule(){
+        if (repositoryModule!=null) return repositoryModule; else
+        { repositoryModule= new RepositoryModule();
+            return repositoryModule;
+        }
+    }
+
+    synchronized DatabaseModule getDatabaseModule(){
+        if (databaseModule!=null) return databaseModule;else {
+
+            databaseModule = new DatabaseModule(application);
+            return databaseModule;}
+    }
+
+
+
 
 
 }
