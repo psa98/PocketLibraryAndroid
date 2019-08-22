@@ -9,6 +9,11 @@ import c.ponom.pocketlibrary.data.Repository;
 import c.ponom.pocketlibrary.ui.SingleActivity;
 
 public class DIclass {
+
+    // вероятно правильнее было бы называть этот модуль сервис локатором, а не DI. но в случае андроида
+    // это дискуссионный вопрос, где проходит граница между ними, поскольку для многих объектов инициализация
+    // осуществляется системой, а не вызываемым программистом конструктором, и чистый DI из учебника не реализуем
+
     static synchronized public  SingleActivity getSingleActivity(){
         return App.getApplicationComponent().getActivitiesModule().getSingleActivity();
     }

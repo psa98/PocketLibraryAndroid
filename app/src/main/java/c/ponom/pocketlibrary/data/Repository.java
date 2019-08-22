@@ -2,11 +2,16 @@ package c.ponom.pocketlibrary.data;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import c.ponom.pocketlibrary.DI.DIclass;
 import c.ponom.pocketlibrary.data.DAO.AuthorDAO;
@@ -80,6 +85,26 @@ public class Repository {
         new updateAsyncTaskAll().execute(record);
 
     }
+
+
+
+    // вынос чтения файла в другой поток я подготовил, но пока это не используется и не отлаживалось.
+    // Мне не нравится блокирующий get. Когда буду переделывать с асиинктасков на экзекьюторы,
+    // разберемся с этим. В принципе при вызове книги на чтение надо отдавать в метод коллбэк, который
+    // будет вызван по завершении - и уже в нем вызывать loadWebView
+
+    public String getBookFromFile (String uri) {
+        AsyncTask<String, Void, String> task = new loadBookFromFile().execute(uri);
+        try {
+            return task.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 
 
@@ -190,6 +215,48 @@ public class Repository {
 
 
     }
+
+
+
+    //todo вынести из основного потока (и сохранение может тоже)
+    public String loadSavedFile(String fileUriUUid) {
+        File file = new File(fileUriUUid );
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(2048*1024);
+        byte[] byteBuff = new byte[512];
+        int len;
+        try (FileInputStream inputStream = new FileInputStream(file)) {
+            while (true) {
+                len = inputStream.read(byteBuff);
+                if (len <= 0) break;
+                byteArrayOutputStream.write(byteBuff, 0, len);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(DIclass.getAppContextAnywhere(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        return new String(byteArrayOutputStream.toByteArray());
+    }
+
+
+
+
+    private static  class loadBookFromFile extends AsyncTask<String , Void, String> {
+
+
+        @Override
+        protected String doInBackground(final String... params) {
+
+
+            return " To do! ";
+                    //loadSavedFile(params[0]);
+        }
+    //todo - Обработать отмену?
+
+
+    }
+
 
 
 }

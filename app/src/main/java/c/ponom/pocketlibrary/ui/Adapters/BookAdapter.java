@@ -73,7 +73,8 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         repository = DIclass.getRepository();
     }
 
-    public static void loadBookAndShow(final Book bookToRead, final Context context) {
+
+     private static void loadBookAndShow(final Book bookToRead, final Context context) {
         //todo - переместить все вызываемое  во вьюмодель. А загрузку - в репозитарий
         String urlToRead=bookToRead.url;
         if (!urlToRead.endsWith(".txt"))return;
@@ -87,6 +88,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         final String  finalUrlToRead=urlToRead.concat("_with-big-pictures.html");
 
         // todo - нестандартные ссылки пока не поддерживаются
+
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, finalUrlToRead,
         new Response.Listener<String>() {

@@ -48,11 +48,9 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
         App.getApplicationComponent().getActivitiesModule().injectSingleActivity(this);
         pd = new ProgressDialog(this);
         setContentView(R.layout.start_screen);
-    //  mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         repository= DIclass.getRepository();
         toolbar =findViewById(R.id.main_toolbar);
         toolbar.inflateMenu(R.menu.menus);
-        //int a =2/0; //test error
         toolbar.setOnMenuItemClickListener(
                 new Toolbar.OnMenuItemClickListener() {
                     @Override
@@ -122,6 +120,7 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
             ((BaseFragment) fragment).setActivityUiOptionsCallback(this);
         }
     }
+
     @Override
     public void showProgressDialog (){
         pd.setTitle(this.getString(R.string.pleasewait));

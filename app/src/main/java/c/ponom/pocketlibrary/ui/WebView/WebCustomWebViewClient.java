@@ -12,14 +12,10 @@ import c.ponom.pocketlibrary.ui.SingleActivity;
 public class WebCustomWebViewClient extends WebViewClient {
     private Repository repository;
 
-    SingleActivity singleActivity;
-    DaoDatabase daoDatabase;
-
 
     WebCustomWebViewClient() {
         super();
-        //singleActivity= DIclass.getSingleActivity();
-        repository= DIclass.getRepository();
+ //       repository= DIclass.getRepository();
 
 
     }
@@ -45,7 +41,7 @@ public class WebCustomWebViewClient extends WebViewClient {
         final float  progressToRestore =0.5f;
 
         // надо в каком - то классе-контейнере хранить прогресс. Вероятно в репозитарии
-        /* todo - протестировать - а вообще умеет textView показывать дикого размера строки? короткий html умеет точно
+        /*
         view.postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -68,12 +68,5 @@ public class AuthorsListFragment extends BaseFragment {
         return view;
     }
 
-    /* а это было зачем?
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(LoadedListViewModel.class);
 
-    }
-    */
 }

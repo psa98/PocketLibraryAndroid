@@ -2,13 +2,25 @@ package c.ponom.pocketlibrary.ui.Fragments;
 
 import androidx.fragment.app.Fragment;
 
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
-    ActivityUiOptions activityUiOptions;
+    protected ActivityUiOptions activityUiOptions;
 
 
-    // This interface can be implemented by the Activity, parent Fragment,
-    // or a separate test implementation.
+    //Интерфейс связи с активностью реализован тут, что бы не дублировать код
+    /*
+     вот это в принципе тоже можно вынести в базовый фрагмент, убрать в реализациях
+
+       @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+
+     */
+
+
     public interface ActivityUiOptions {
 
         void setNewTitle(String newTitle, String newSubTitle);

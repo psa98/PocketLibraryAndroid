@@ -18,11 +18,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
+import c.ponom.pocketlibrary.DI.DIclass;
 import c.ponom.pocketlibrary.data.RoomEntities.Book;
 import c.ponom.pocketlibrary.R;
+import c.ponom.pocketlibrary.ui.Fragments.BaseFragment;
 import c.ponom.pocketlibrary.ui.SingleActivity;
 
-public class WebViewFragment extends Fragment {
+public class WebViewFragment extends BaseFragment {
 
     private static Book currentBook;
     private WebView webView;
@@ -56,50 +58,27 @@ public class WebViewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.web_content_scrolling, container, false);
-        ((SingleActivity) getContext()).setNewTitle(currentBook.authorName,currentBook.bookName);
-        ((SingleActivity) getContext()).setBackButtonVisibility(true);
+
+        activityUiOptions.setNewTitle(currentBook.authorName,currentBook.bookName);
+        activityUiOptions.setBackButtonVisibility(true);
+
         webView =  view.findViewById(R.id.webViewMain);
-        webView.setWebViewClient(new WebCustomWebViewClient());
-        String stringToRead = loadSavedFile(this.getContext(), currentFileName);
-        //webView.getSettings().setSupportZoom(true);
-        //webView.getSettings().setBuiltInZoomControls(true);
-        //webView.loadUrl("file:///"+url);
-        //todo - проверить можно ли скормить вебвью файл через file:\\
-        // + передать сюда корневой каталог как то или вытащить его из параметра
+                webView.setWebViewClient(new WebCustomWebViewClient());
+        String stringToRead = DIclass.getRepository().loadSavedFile( currentFileName);
+
 
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        //webView.loadDataWithBaseURL(null, getHTMLString(), "text/html", null, null);
 
-
-        //webView.getSettings().setAllowContentAccess(false);
-        webView.loadDataWithBaseURL(currentBook.url+"_with-big-pictures.html", stringToRead, "text/html", null, null);
+        webView.loadDataWithBaseURL(currentBook.url+"_with-big-pictures.html",
+                stringToRead, "text/html", null, null);
         return view;
     }
 
 
 
 
-    //todo вынести из основного потока (и сохранение может тоже)
-    private String loadSavedFile(Context context, String fileUriUUid) {
-        File file = new File(fileUriUUid );
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(2048*1024);
-        byte[] byteBuff = new byte[512];
-        int len;
-        try (FileInputStream inputStream = new FileInputStream(file)) {
-            while (true) {
-                len = inputStream.read(byteBuff);
-                if (len <= 0) break;
-                byteArrayOutputStream.write(byteBuff, 0, len);
 
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-        }
-
-          return new String(byteArrayOutputStream.toByteArray());
-    }
 
 
 
