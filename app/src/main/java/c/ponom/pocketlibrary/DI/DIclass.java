@@ -2,6 +2,7 @@ package c.ponom.pocketlibrary.DI;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 
 import c.ponom.pocketlibrary.data.DaoDatabase;
 import c.ponom.pocketlibrary.data.Repository;
@@ -28,10 +29,14 @@ public class DIclass {
     }
 
 
+    static synchronized public Resources getAppResources(){
+        return getAppContextAnywhere().getResources();
+    }
+
     /*todo - (1) данный набор классов DIclass вполне расширяем. Добавление общедоступных элементов можно сделать
     через добавление отдельных модулей или включение их в имеющиеся к аналогичным
     (2) todo  - в данный момент у меня база данных  самостоятельно обеспечивают свое существование
-    как синглтон. Этот код там не нужен - и его нужно ликвидировать, за единственностью следит соответствующий модуль.
+    как синглтон. Этот код там не нужен - и его нужно ликвидировать, за единственностью должен следить соответствующий модуль.
 
      */
 

@@ -21,7 +21,7 @@ public class NetworkLoaders {
 
     public static void loadChapterList(){
         final Context context = DIclass.getSingleActivity();
-        //todo - теоретически сюда можно и контекст приложения передать, и так надежнее будет,
+        //todo - теоретически сюда нужно  контекст приложения передать, и так надежнее будет,
         // если вызвать обновление в момент повторота скажем, но пока оставим - что бы убедиться что DI для активности работает
 
         RequestQueue queue = Volley.newRequestQueue(context);
