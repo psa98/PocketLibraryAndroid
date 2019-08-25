@@ -8,12 +8,12 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 
-import c.ponom.pocketlibrary.data.DAO.AuthorDAO;
-import c.ponom.pocketlibrary.data.DAO.BookDAO;
-import c.ponom.pocketlibrary.data.DAO.SubChapterDAO;
-import c.ponom.pocketlibrary.data.RoomEntities.Author;
-import c.ponom.pocketlibrary.data.RoomEntities.Book;
-import c.ponom.pocketlibrary.data.RoomEntities.SubChapter;
+import c.ponom.pocketlibrary.data.dao.AuthorDAO;
+import c.ponom.pocketlibrary.data.dao.BookDAO;
+import c.ponom.pocketlibrary.data.dao.SubChapterDAO;
+import c.ponom.pocketlibrary.data.room_entities.Author;
+import c.ponom.pocketlibrary.data.room_entities.Book;
+import c.ponom.pocketlibrary.data.room_entities.SubChapter;
 
 
 @Database(entities = {Book.class,

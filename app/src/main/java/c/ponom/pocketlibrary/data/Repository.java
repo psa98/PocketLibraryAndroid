@@ -13,24 +13,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import c.ponom.pocketlibrary.DI.DIclass;
-import c.ponom.pocketlibrary.data.DAO.AuthorDAO;
-import c.ponom.pocketlibrary.data.DAO.BookDAO;
-import c.ponom.pocketlibrary.data.DAO.SubChapterDAO;
-import c.ponom.pocketlibrary.data.RoomEntities.Author;
-import c.ponom.pocketlibrary.data.RoomEntities.BaseEntity;
-import c.ponom.pocketlibrary.data.RoomEntities.Book;
-import c.ponom.pocketlibrary.data.RoomEntities.SubChapter;
+import c.ponom.pocketlibrary.di.DIСlass;
+import c.ponom.pocketlibrary.data.dao.AuthorDAO;
+import c.ponom.pocketlibrary.data.dao.BookDAO;
+import c.ponom.pocketlibrary.data.dao.SubChapterDAO;
+import c.ponom.pocketlibrary.data.room_entities.Author;
+import c.ponom.pocketlibrary.data.room_entities.BaseEntity;
+import c.ponom.pocketlibrary.data.room_entities.Book;
+import c.ponom.pocketlibrary.data.room_entities.SubChapter;
 
 
 
 public class Repository {
 
-
-    /**
-     * Abstracted Repository as promoted by the Architecture Guide.
-     * https://developer.android.com/topic/libraries/architecture/guide.html
-     */
 
         private static AuthorDAO mAuthorDAO;
         private static BookDAO mBookDAO;
@@ -43,7 +38,7 @@ public class Repository {
 
 
     public Repository() {
-            DaoDatabase db = DIclass.getDaoDatabase();
+            DaoDatabase db = DIСlass.getDaoDatabase();
             mAuthorDAO = db.getAuthorDAO();
             mBookDAO=db.getBooksDAO();
             mSubChapterDAO=db.getSubChapterDAO();
@@ -97,9 +92,7 @@ public class Repository {
         AsyncTask<String, Void, String> task = new loadBookFromFile().execute(uri);
         try {
             return task.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         return null;
@@ -120,13 +113,7 @@ public class Repository {
         new clearTableAsyncTask().execute(Book.class);
     }
 
-    public void saveWebState(String name,Bundle outState) {
-        // в данном случае мы храним привязанные к каждой книге текущего сеанса пары <Название Книги, состояние > в ХэшСет;
-        // метод статичный, так что проверки не нужны
-        // todo - можно сохранять этот набор в базе или Gson каждый раз и подгружать при запуске
-        webViewState.put(name,outState);
 
-    }
 
     public Bundle loadWebState(String name) {
 
@@ -233,7 +220,7 @@ public class Repository {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(DIclass.getAppContextAnywhere(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(DIСlass.getAppContextAnywhere(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
 
         return new String(byteArrayOutputStream.toByteArray());
@@ -243,16 +230,12 @@ public class Repository {
 
 
     private static  class loadBookFromFile extends AsyncTask<String , Void, String> {
-
-
-        @Override
+     @Override
         protected String doInBackground(final String... params) {
-
-
-            return " To do! ";
-                    //loadSavedFile(params[0]);
+          return " To do! ";
+     //loadSavedFile(params[0]);
         }
-    //todo - Обработать отмену?
+    //todo - Обработать отмену операции при повороте?
 
 
     }

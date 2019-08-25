@@ -11,36 +11,29 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Objects;
 
-import c.ponom.pocketlibrary.DI.App;
-import c.ponom.pocketlibrary.DI.DIclass;
-import c.ponom.pocketlibrary.data.NetworkLoaders.NetworkLoaders;
+import c.ponom.pocketlibrary.di.App;
+import c.ponom.pocketlibrary.di.DIСlass;
+import c.ponom.pocketlibrary.data.network_loaders.NetworkLoaders;
 import c.ponom.pocketlibrary.data.Repository;
-import c.ponom.pocketlibrary.data.RoomEntities.Author;
-import c.ponom.pocketlibrary.data.RoomEntities.Book;
-import c.ponom.pocketlibrary.data.RoomEntities.SubChapter;
+import c.ponom.pocketlibrary.data.room_entities.Author;
+import c.ponom.pocketlibrary.data.room_entities.Book;
+import c.ponom.pocketlibrary.data.room_entities.SubChapter;
 import c.ponom.pocketlibrary.R;
-import c.ponom.pocketlibrary.ui.Fragments.AuthorsListFragment;
-import c.ponom.pocketlibrary.ui.Fragments.BaseFragment;
-import c.ponom.pocketlibrary.ui.Fragments.BooksListFragment;
-import c.ponom.pocketlibrary.ui.Fragments.LoadedListFragment;
-import c.ponom.pocketlibrary.ui.Fragments.SubChaptersFragment;
-import c.ponom.pocketlibrary.ui.WebView.WebViewFragment;
+import c.ponom.pocketlibrary.ui.fragments.AuthorsListFragment;
+import c.ponom.pocketlibrary.ui.fragments.BaseFragment;
+import c.ponom.pocketlibrary.ui.fragments.BooksListFragment;
+import c.ponom.pocketlibrary.ui.fragments.LoadedListFragment;
+import c.ponom.pocketlibrary.ui.fragments.SubChaptersFragment;
+import c.ponom.pocketlibrary.ui.web_view.WebViewFragment;
 
 public class SingleActivity extends AppCompatActivity implements BaseFragment.ActivityUiOptions {
 
 
-    //String YandexAPI = "AOpkMF0BAAAAklyiHQQD5AL6FpeRxKCBZlBhqklDbcA2Up8AAAAAAAAAAABupmQxoJIt_0yufDgylSz2Ishx5A==";
     Repository repository;
     Toolbar toolbar=null;
-  //  private FirebaseAnalytics mFirebaseAnalytics;
     ProgressDialog pd;
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        App.getApplicationComponent().getActivitiesModule().removeSingleActivity();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +41,7 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
         App.getApplicationComponent().getActivitiesModule().injectSingleActivity(this);
         pd = new ProgressDialog(this);
         setContentView(R.layout.start_screen);
-        repository= DIclass.getRepository();
+        repository= DIСlass.getRepository();
         toolbar =findViewById(R.id.main_toolbar);
         toolbar.inflateMenu(R.menu.menus);
         toolbar.setOnMenuItemClickListener(
@@ -65,7 +58,7 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
         if (savedInstanceState==null) {
             // todo - вообще это потенциально глючно, проверить что будет если запустить
             //  пустое приложение без сети, потом восстановить его при включенной сети - вроде тогда загрузка
-            //  не вызовется.  Надо другой метод придумать
+            //  не вызовется и спиок будет пустой до перезапуска.  Надо другой метод придумать
             NetworkLoaders.loadChapterList();
             showMainFragment();
         }
@@ -97,7 +90,7 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
                 break;
             }
             case R.id.action_about_item: {
-                // todo - вызов обработчика будет тут
+                // todo - вызов информационного окна
                 break;
             }
 
@@ -201,64 +194,6 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
     }
 
 
-
-
-    /* глобальные задачи
-    todo рисование нормальных списков по Материал.
-    реализовано вызов webView переделать на загрузку файла в дата каталог и открытие Вебвью для него
-    отменено  Добавить кнопку загрузки всех произведений для уровня "авторы"
-    todo добавить чекбокс или иную выборку для удаления  загруженного
-
-
-    отлоожено - такие разделы просто пока будут игнорироваться
-     переделка структуры базы данных на последнем уровне - под возможность работы с html и ссылками на az и другое плюс
-    сделано  список исключаемых подразделов первого уровня
-    исключено - там все одно другие размеры чем на диске победить в регулярке размеры файла, построить пересчет их вверх по иерарархи
-    реализовано  определиться с отображением текстового файла - возможно стоит перейти на html (если оно поддерживается вообще)
-    реализовано  подготовить загрузку текстовых файлов (блоб? или все таки толпа файлов?)
-    todo сделать уникальный индекс для базы книг (раздел, автор, название) и вообще пересмотреть индексы
-    реализовано  перетасовать все по подразделам (модели, адаптеры, фрагменты, активности)
-    todo переделать вызов базовой активности из фрагментов - на прямое общение фрагментов или на интерфейсы?
-    сделано  объединить загрузку и вызов парсеров в одном модуле/пакете
-    сделано без даггера  реализовать использование dagger - с хранением параметров и общих данных
-    (контеста или хотя бы ссылок на репозиториии, базу)
-    todo подготовить фрагмент с информацией о программе, лицензиями
-    реализовано  убрать из интерфейсов DAO, базы данных  все лишнее
-    todo переписать асинкТаски на что-то посовременннее. В учебных целях. Вероятно экзекьюторы все же.
-    реализовано  реализовать массовую вставку / замену /удаление  записей, путем передачи массива через асинктаски и ДАО
-    реализовано  переделать обычные адаптеры на list - и реализовать обновление на экране только реально измененных записей
-    todo реализовать обработку отсутствия интернета (не пытаться в этом случае получить данные)
-    todo обеспечить минимальный набор проверок при парсинге
-    реализовано  обеспечить вывод сообщений об ошибках связи
-    todo минимальная обработка полей WebView. Обеспечить невозможность выхода за пределы домена
-    сделано, убрано - посмотреть почему местами не убирается <b>
-    сделано кроме удаления   - реализовать экран-список уже загруженных файлов, просмотр их и исключение с удалением.
-    сделано  после того как зафиксировано развитие репозитория - написать для него юнит-тесты, или хотя бы андроид-тесты
-    отменено - излишнее - для парсеров - написать юнит тест, грузящий рекрурсивно всю либу.
-    отменено  - добавить транзакции для массовых записей - типа такого
-    причина - целостность базы интересует мало, поскольку она постояно подзагружается, а единственная массовая операция у нас - удаление
-
-
-
-     */
-
-
-
 }
-
-
-
-    /*
-    Задачи - освоение и использование следующего стека технологий:
-    dagger 2; - заменено на самописный DI
-    room; - вроде разобрался. и с концепцией репозитария тоже
-    rx - рановато, и тема проекта не оптимальная
-    MVVM+lifedata - в одну сторону разобрался, осталось сделать автоматически меняющиеся данные (в обе стороны?)
-    поле и вызов из Вью
-    retrofit - заменено пока на volley.
-    Впрочем, можно попробовать последний уровень им разобрать
-
-     */
-
 
 

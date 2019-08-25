@@ -13,12 +13,12 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
-import c.ponom.pocketlibrary.DI.DIclass;
-import c.ponom.pocketlibrary.data.NetworkLoaders.HTMLCustomParsers;
+import c.ponom.pocketlibrary.di.DIСlass;
+import c.ponom.pocketlibrary.data.network_loaders.HTMLCustomParsers;
 import c.ponom.pocketlibrary.data.Repository;
-import c.ponom.pocketlibrary.data.RoomEntities.Author;
-import c.ponom.pocketlibrary.data.RoomEntities.Book;
-import c.ponom.pocketlibrary.data.RoomEntities.SubChapter;
+import c.ponom.pocketlibrary.data.room_entities.Author;
+import c.ponom.pocketlibrary.data.room_entities.Book;
+import c.ponom.pocketlibrary.data.room_entities.SubChapter;
 
 
 import static org.junit.Assert.assertEquals;
@@ -46,7 +46,7 @@ public class UnitTestSampleJava {
 
             Repository repository;
             Application application= (Application) context.getApplicationContext();
-            repository = DIclass.getRepository();
+            repository = DIСlass.getRepository();
             assertNotNull(repository);
             assertNotNull(application);
 
