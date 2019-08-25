@@ -38,7 +38,6 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getApplicationComponent().getActivitiesModule().injectSingleActivity(this);
         pd = new ProgressDialog(this);
         setContentView(R.layout.start_screen);
         repository= DIСlass.getRepository();
