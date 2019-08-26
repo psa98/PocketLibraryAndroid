@@ -50,8 +50,15 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         Book book= (Book) view.getTag();
         view.setClickable(false);
         view.setBackgroundColor(0xffeeeeee);
+        view.setEnabled(false);
         //это чтобы убрать возможность двойного клика
+
         loadBookAndShow(book,view.getContext());
+
+        view.setClickable(true);
+        view.setBackgroundColor(0xffeeeeee);
+        view.setEnabled(true);
+
         }
     };
 
@@ -61,7 +68,8 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         @Override
         public boolean onLongClick(View view) {
         Book book= (Book) view.getTag();
-        // todo тут будет вызываться удаление файла, обнуление полей записи размер и путь - после вызова контекстного меню
+        // todo тут будет вызываться удаление файла,
+        //  после вызова контекстного меню. хотя правильнее это сделать на листание влево
         return true;
         }
     };
@@ -69,6 +77,10 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
 
     public BookAdapter() {
         super(BookAdapter.DIFF_CALLBACK);
+        icon= BitmapFactory.
+                decodeResource(DIСlass.getAppResources(),android.R.drawable.checkbox_off_background);
+        icon_done= BitmapFactory.
+                decodeResource(DIСlass.getAppResources(),android.R.drawable.checkbox_on_background);
 
         repository = DIСlass.getRepository();
     }
@@ -169,20 +181,16 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
             TextView book;
             ImageView loadButton;
 
-            ViewHolder(View view) {
+
+
+
+        ViewHolder(View view) {
                 super(view);
                 url=view.findViewById(R.id.urlInBooks);
                 size=view.findViewById(R.id.sizeInBooks);
                 author=view.findViewById(R.id.authorNameInBooks);
                 book=view.findViewById(R.id.BooknameInBooks);
                 loadButton=view.findViewById(R.id.loadBookIcon);
-                icon= BitmapFactory.
-                        decodeResource(view.getContext().
-                                getResources(),android.R.drawable.checkbox_off_background);
-                icon_done= BitmapFactory.
-                        decodeResource(view.getContext().
-                                getResources(),android.R.drawable.checkbox_on_background);
-
 
                 url.setVisibility(View.GONE);
                 //временно убрано, дабы не засорять ресайклер

@@ -20,9 +20,7 @@ public class NetworkLoaders {
 
 
     public static void loadChapterList(){
-        final Context context = DIСlass.getSingleActivity();
-        //todo - теоретически сюда нужно  контекст приложения передать, и так надежнее будет,
-        // если вызвать обновление в момент повторота скажем, но пока оставим - что бы убедиться что DI для активности работает
+        final Context context = DIСlass.getAppContextAnywhere();
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -37,6 +35,9 @@ public class NetworkLoaders {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                //todo сделать обработку отсутствия связи отдельно - не выводить длинный тост в этом случае,
+                // а сделать информативный типа "связи нет - можете читать загруженное ранее"
+
             }
         });
         queue.add(stringRequest);
@@ -46,7 +47,7 @@ public class NetworkLoaders {
 
     public static void loadAuthorsList(final SubChapter subChapter){
         //todo - определиться  с проверкой на наличие как связи на момент вызова, так и скачанного и распарсенного ранее
-        final Context context = DIСlass.getSingleActivity();
+        final Context context = DIСlass.getAppContextAnywhere();
 
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, subChapter.url,
@@ -56,12 +57,15 @@ public class NetworkLoaders {
                     public void onResponse(String response) {
                         HTMLCustomParsers.parseSubChapter(response,subChapter);
 
-
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+                //todo сделать обработку отсутствия связи отдельно - не выводить длинный тост в этом случае,
+                // а сделать информативный типа "связи нет - можете читать загруженное ранее"
+
             }
         });
         queue.add(stringRequest);
@@ -71,7 +75,7 @@ public class NetworkLoaders {
 
     public static void loadBooksList (final Author author){
         //todo - определиться ч с проверкой на наличие как связи на момент вызова, так и скачанного и распарсенного ранее
-        final Context context = DIСlass.getSingleActivity();
+        final Context context = DIСlass.getAppContextAnywhere();
 
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, author.url,
@@ -81,18 +85,18 @@ public class NetworkLoaders {
                     public void onResponse(String response) {
                         HTMLCustomParsers.parseAuthorInSubChapter(response, author,author.url);
 
-
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+                //todo сделать обработку отсутствия связи отдельно - не выводить длинный тост в этом случае,
+                // а сделать информативный типа "связи нет - можете читать загруженное ранее"
+
             }
         });
         queue.add(stringRequest);
     }
-
-
-
 
 }
