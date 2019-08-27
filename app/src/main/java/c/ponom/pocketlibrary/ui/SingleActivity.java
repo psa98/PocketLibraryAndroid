@@ -1,6 +1,8 @@
 package c.ponom.pocketlibrary.ui;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,10 +33,11 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
 
 
     Repository repository;
-    Toolbar toolbar=null;
+    public Toolbar toolbar=null;
     ProgressDialog pd;
     ProgressBar progressBar;
-
+    private boolean menuSendVisible=false;
+    public String currentBookUrl="";
 
 
     @Override
@@ -55,8 +58,12 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
                     }
                 });
 
-         setSupportActionBar(toolbar);
+
          toolbar.setTitle("");
+
+
+        setSupportActionBar(toolbar);
+        hideSendButton();
 
         if (savedInstanceState==null) {
             // todo - вообще это потенциально глючно, проверить что будет если запустить
@@ -83,6 +90,31 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
         return true;
     }
 
+    /**
+     * Prepare the Screen's standard options menu to be displayed.  This is
+     * called right before the menu is shown, every time it is shown.  You can
+     * use this method to efficiently enable/disable items or otherwise
+     * dynamically modify the contents.
+     *
+     * <p>The default implementation updates the system menu items based on the
+     * activity's state.  Deriving classes should always call through to the
+     * base class implementation.
+     *
+     * @param menu The options menu as last shown or first initialized by
+     *             onCreateOptionsMenu().
+     * @return You must return true for the menu to be displayed;
+     * if you return false it will not be shown.
+     * @see #onCreateOptionsMenu
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.send).setVisible(menuSendVisible);
+        menu.findItem(R.id.send).setEnabled(menuSendVisible);
+        return super.onPrepareOptionsMenu(menu);
+
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -99,14 +131,35 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
 
             case R.id.action_loaded_book_list: {
                 showLoadedListFragment();
+                break;
             }
 
-            return true;
-        }
+            case R.id.send: {
+                sendLink(currentBookUrl);
+                break;
+            }
 
+
+        }
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
+
+
+
+    private void sendLink(String bookUrl) {
+        if (bookUrl.isEmpty()) return;
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT,bookUrl);
+        shareIntent.setType("text/plain");
+        this.startActivity(Intent.createChooser(shareIntent,
+                this.getResources().getText(R.string.sendTo)));
+
+    }
 
 
     @Override
@@ -127,6 +180,18 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
     public void hideProgressBar () {
         progressBar.setVisibility(View.INVISIBLE);
     }
+
+
+    @Override
+    public void showSendButton() {
+        menuSendVisible=true;
+   }
+
+    @Override
+    public void hideSendButton() {
+        menuSendVisible=false;
+    }
+
 
 
 

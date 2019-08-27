@@ -36,7 +36,6 @@ public class LoadedListFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.book_list_loaded, container, false);
-        //binding =DataBindingUtil.inflate(inflater,R.layout.book_list_loaded,container,false);
         final BookAdapter loadedListAdapter =new BookAdapter();
         activityUiOptions.setNewTitle("Book shelf","");
         activityUiOptions.setBackButtonVisibility(true);

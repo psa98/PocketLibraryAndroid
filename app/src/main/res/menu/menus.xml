@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/settings_item"
-        android:title="@string/settings" />
+
     <item
         android:id="@+id/action_about_item"
         android:title="@string/about" />
@@ -11,5 +10,15 @@
     <item
         android:id="@+id/action_loaded_book_list"
         android:title="@string/saved_books_list" />
+
+    <item
+
+        android:id="@+id/send"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="@string/send_a_link_to_book"
+        app:showAsAction="always"
+        />
+
+
 
 </menu>

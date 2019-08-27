@@ -24,6 +24,10 @@ public abstract class BaseFragment extends Fragment {
 
     public interface ActivityUiOptions {
 
+        void showSendButton();
+
+        void hideSendButton();
+
         void setNewTitle(String newTitle, String newSubTitle);
         void setBackButtonVisibility(boolean setting);
         void showProgressBar ();

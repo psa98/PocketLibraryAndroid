@@ -8,4 +8,6 @@
     <string name="saved_books_list">Saved books list</string>
     <string name="pleasewait">Please wait</string>
     <string name="no_intenet">No Internet connection available.   You can read loaded books</string>
+    <string name="send_a_link_to_book">Send a link to book</string>
+    <string name="sendTo">Send a link to:</string>
 </resources>

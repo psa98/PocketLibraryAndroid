@@ -28,6 +28,7 @@ public class WebCustomWebViewClient extends WebViewClient {
         super.onPageStarted(view, url, favicon);
         ((SingleActivity) view.getContext()).showProgressBar();
 
+
     }
 
 

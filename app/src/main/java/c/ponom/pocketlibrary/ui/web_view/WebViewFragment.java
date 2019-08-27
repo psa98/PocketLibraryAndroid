@@ -15,6 +15,7 @@ import android.webkit.WebView;
 import c.ponom.pocketlibrary.di.DIСlass;
 import c.ponom.pocketlibrary.data.room_entities.Book;
 import c.ponom.pocketlibrary.R;
+import c.ponom.pocketlibrary.ui.SingleActivity;
 import c.ponom.pocketlibrary.ui.fragments.BaseFragment;
 
 public class WebViewFragment extends BaseFragment {
@@ -24,13 +25,11 @@ public class WebViewFragment extends BaseFragment {
     private static String currentFileName;
 
 
-
-
-    public  static WebViewFragment newInstance(Book book,String currentFile, Context context) {
+    public static WebViewFragment newInstance(Book book, String currentFile, Context context) {
         currentBook = book;
-        currentFileName=currentFile;
+        currentFileName = currentFile;
 
-         // todo теоретически можно использовать custom chrome tabs, которые очень быстрые -
+        // todo теоретически можно использовать custom chrome tabs, которые очень быстрые -
         //  но они не работают с локальной строкой - надо поднимать локальный сервер
 
         return new WebViewFragment();
@@ -42,73 +41,47 @@ public class WebViewFragment extends BaseFragment {
         setRetainInstance(true);
     }
 
+    /**
+     * Called when the fragment is no longer in use.  This is called
+     * after {@link #onStop()} and before {@link #onDetach()}.
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // TODO: надо найти способ попроще прятать пункт меню.
+        //  использовать фактически глобальную переменную не годится. Возможно проще будет
+        //  фрагменту завести свой тулбар, чем менять паратметры глобального.
+        ((SingleActivity)getActivity()).hideSendButton();
+        ((SingleActivity)getActivity()).onPrepareOptionsMenu(((SingleActivity)getActivity()).toolbar.getMenu());
+        ((SingleActivity) getActivity()).currentBookUrl="";
+
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.web_content_scrolling, container, false);
 
-        activityUiOptions.setNewTitle(currentBook.authorName,currentBook.bookName);
+        activityUiOptions.setNewTitle(currentBook.authorName, currentBook.bookName);
         activityUiOptions.setBackButtonVisibility(true);
 
-        webView =  view.findViewById(R.id.webViewMain);
-                webView.setWebViewClient(new WebCustomWebViewClient());
-        String stringToRead = DIСlass.getRepository().loadSavedFile( currentFileName);
-
+        webView = view.findViewById(R.id.webViewMain);
+        webView.setWebViewClient(new WebCustomWebViewClient());
+        String stringToRead = DIСlass.getRepository().loadSavedFile(currentFileName);
+        ((SingleActivity)getActivity()).showSendButton();
 
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 
-        webView.loadDataWithBaseURL(currentBook.url+"_with-big-pictures.html",
+        webView.loadDataWithBaseURL(currentBook.url + "_with-big-pictures.html",
                 stringToRead, "text/html", null, null);
+
+        ((SingleActivity)getActivity()).onPrepareOptionsMenu(((SingleActivity)getActivity()).toolbar.getMenu());
+        ((SingleActivity) getActivity()).currentBookUrl=currentBook.url;
+        ((SingleActivity)getActivity()).showSendButton();
+
         return view;
     }
 
 
-
-
-
-
-
-
-
-
-    // Calculate the % of scroll progress in the actual web page content
-    private float calculateProgression(WebView content) {
-        float positionTopView = content.getTop();
-        float contentHeight = content.getContentHeight();
-        float currentScrollPosition = content.getScrollY();
-        return  (currentScrollPosition - positionTopView) / contentHeight;
-
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        float mProgress = calculateProgression(webView);
-        outState.putFloat("progress",mProgress);
-        super.onSaveInstanceState(outState);
-
-
-    }
-
-
-
-
-
-
-
-
-    /* //todo - при просмотре наладить - обработку "назад", запоминание позиции при выходе.
-    @Override
-    public void onBackPressed() {
-        if(webView.canGoBack()) {
-            webView.goBack();
-        } else {
-            super.onBackPressed();
-        }
-    } */
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
 }
