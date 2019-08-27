@@ -1,6 +1,7 @@
 package c.ponom.pocketlibrary.ui.fragments;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,8 +26,9 @@ public abstract class BaseFragment extends Fragment {
 
         void setNewTitle(String newTitle, String newSubTitle);
         void setBackButtonVisibility(boolean setting);
-        void hideProgressDialog();
-        void showProgressDialog();
+        void showProgressBar ();
+        void hideProgressBar ();
+
     }
 
     public void setActivityUiOptionsCallback (ActivityUiOptions callback) {

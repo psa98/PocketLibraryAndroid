@@ -11,6 +11,7 @@ import androidx.room.Update;
 import java.util.List;
 
 import c.ponom.pocketlibrary.data.room_entities.Author;
+import c.ponom.pocketlibrary.data.room_entities.BaseEntity;
 
 
 @Dao

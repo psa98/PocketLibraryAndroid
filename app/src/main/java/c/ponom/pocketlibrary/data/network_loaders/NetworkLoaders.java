@@ -10,9 +10,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import c.ponom.pocketlibrary.R;
 import c.ponom.pocketlibrary.di.DIСlass;
 import c.ponom.pocketlibrary.data.room_entities.Author;
 import c.ponom.pocketlibrary.data.room_entities.SubChapter;
+import c.ponom.pocketlibrary.utils.SystemData;
 
 public class NetworkLoaders {
 
@@ -35,8 +37,10 @@ public class NetworkLoaders {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                //todo сделать обработку отсутствия связи отдельно - не выводить длинный тост в этом случае,
-                // а сделать информативный типа "связи нет - можете читать загруженное ранее"
+                if (!SystemData.isNetworkAvailable(context))
+                    Toast.makeText(context, context.getResources().getString(R.string.no_intenet),
+                            Toast.LENGTH_LONG).show(); else
+                    Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
             }
         });
@@ -56,15 +60,14 @@ public class NetworkLoaders {
                     @Override
                     public void onResponse(String response) {
                         HTMLCustomParsers.parseSubChapter(response,subChapter);
-
-                    }
+                                         }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-
-                //todo сделать обработку отсутствия связи отдельно - не выводить длинный тост в этом случае,
-                // а сделать информативный типа "связи нет - можете читать загруженное ранее"
+                if (!SystemData.isNetworkAvailable(context))
+                    Toast.makeText(context, context.getResources().getString(R.string.no_intenet),
+                            Toast.LENGTH_LONG).show(); else
+                    Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
             }
         });
@@ -89,10 +92,10 @@ public class NetworkLoaders {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-
-                //todo сделать обработку отсутствия связи отдельно - не выводить длинный тост в этом случае,
-                // а сделать информативный типа "связи нет - можете читать загруженное ранее"
+                if (!SystemData.isNetworkAvailable(context))
+                    Toast.makeText(context, context.getResources().getString(R.string.no_intenet),
+                            Toast.LENGTH_LONG).show(); else
+                    Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
             }
         });

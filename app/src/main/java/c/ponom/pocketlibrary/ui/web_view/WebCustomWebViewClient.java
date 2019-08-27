@@ -26,7 +26,7 @@ public class WebCustomWebViewClient extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
-        ((SingleActivity) view.getContext()).showProgressDialog();
+        ((SingleActivity) view.getContext()).showProgressBar();
 
     }
 
@@ -35,7 +35,7 @@ public class WebCustomWebViewClient extends WebViewClient {
     @Override
     public void onPageFinished(final WebView view, String url) {
         super.onPageFinished(view, url);
-        ((SingleActivity) view.getContext()).hideProgressDialog();
+        ((SingleActivity) view.getContext()).hideProgressBar();
 
         }
 

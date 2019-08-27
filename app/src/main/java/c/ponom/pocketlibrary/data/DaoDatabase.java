@@ -36,7 +36,7 @@ public abstract class DaoDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             DaoDatabase.class, "mydb")
                             .fallbackToDestructiveMigration()
-                            //.allowMainThreadQueries()
+                            .allowMainThreadQueries()
                             //.addCallback(sRoomDatabaseCallback)   раскомментить при необходимости
                             .build();
                 }

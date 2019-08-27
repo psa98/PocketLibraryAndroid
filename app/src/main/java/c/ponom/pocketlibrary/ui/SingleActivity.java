@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,14 +13,13 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Objects;
 
-import c.ponom.pocketlibrary.di.App;
-import c.ponom.pocketlibrary.di.DIСlass;
-import c.ponom.pocketlibrary.data.network_loaders.NetworkLoaders;
+import c.ponom.pocketlibrary.R;
 import c.ponom.pocketlibrary.data.Repository;
+import c.ponom.pocketlibrary.data.network_loaders.NetworkLoaders;
 import c.ponom.pocketlibrary.data.room_entities.Author;
 import c.ponom.pocketlibrary.data.room_entities.Book;
 import c.ponom.pocketlibrary.data.room_entities.SubChapter;
-import c.ponom.pocketlibrary.R;
+import c.ponom.pocketlibrary.di.DIСlass;
 import c.ponom.pocketlibrary.ui.fragments.AuthorsListFragment;
 import c.ponom.pocketlibrary.ui.fragments.BaseFragment;
 import c.ponom.pocketlibrary.ui.fragments.BooksListFragment;
@@ -32,6 +33,7 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
     Repository repository;
     Toolbar toolbar=null;
     ProgressDialog pd;
+    ProgressBar progressBar;
 
 
 
@@ -41,6 +43,8 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
         pd = new ProgressDialog(this);
         setContentView(R.layout.start_screen);
         repository= DIСlass.getRepository();
+        progressBar =  findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);
         toolbar =findViewById(R.id.main_toolbar);
         toolbar.inflateMenu(R.menu.menus);
         toolbar.setOnMenuItemClickListener(
@@ -114,17 +118,18 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
     }
 
     @Override
-    public void showProgressDialog (){
-        pd.setTitle(this.getString(R.string.pleasewait));
-        pd.setMessage("");
-        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        pd.setIndeterminate(true);
-        pd.show();
+    public void showProgressBar () {
+        progressBar.setVisibility(View.VISIBLE);
+
     }
 
-    public void hideProgressDialog(){
-        pd.dismiss();
+    @Override
+    public void hideProgressBar () {
+        progressBar.setVisibility(View.INVISIBLE);
     }
+
+
+
 
     @Override
     public void setNewTitle(String title, String subtitle){
