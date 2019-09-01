@@ -87,7 +87,6 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
 
 
      private static void loadBookAndShow(final Book bookToRead, final Context context) {
-        //todo - переместить все вызываемое  во вьюмодель. А загрузку - в репозитарий
         String urlToRead=bookToRead.url;
         if (!urlToRead.endsWith(".txt"))return;
 
@@ -96,6 +95,8 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
             ((SingleActivity) context).launchWebView(bookToRead.uriToFile,bookToRead);
         return;
         }
+
+
         //иначе скачиваем файл на диск и передаем его новый адрес в репозиторий и в вызов фрагмента
         final String  finalUrlToRead=urlToRead.concat("_with-big-pictures.html");
 
@@ -112,7 +113,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
                             &&endPosition<response.length()?endPosition:0);
                     String newFileString = header+body;
                     String fileUUid = NameHashes.nameDigest(finalUrlToRead)+".html";
-                    String filePath =saveFile(context,fileUUid, newFileString);
+                    String filePath =repository.saveFile(fileUUid, newFileString);
                     bookToRead.uriToFile=filePath;
                     bookToRead.sizeInKb=(int)(new File(filePath).length()/1024);
                     repository.updateRecord(bookToRead);
@@ -130,18 +131,6 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
     }
 
 
-
-    private static String saveFile(Context context,String fileUriUUid, String newFile) {
-        File file = new File(context.getExternalFilesDir(null), fileUriUUid);
-        try(FileOutputStream outputStream = new FileOutputStream(file)) {
-                        outputStream.write(newFile.getBytes());
-         } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-            return "";
-        }
-        return file.getAbsolutePath();
-    }
 
 
     @NonNull

@@ -1,5 +1,6 @@
 package c.ponom.pocketlibrary.data;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -9,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -79,6 +81,20 @@ public class Repository {
     public void updateRecord(BaseEntity record) {
         new updateAsyncTaskAll().execute(record);
 
+    }
+
+    public  String saveFile(String fileUriUUid, String newFile) {
+        // сохраняем переданную строку в файл с полученным именем
+        Context context = DIСlass.getAppContextAnywhere();
+        File file = new File(context.getExternalFilesDir(null), fileUriUUid);
+        try(FileOutputStream outputStream = new FileOutputStream(file)) {
+            outputStream.write(newFile.getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+            return "";
+        }
+        return file.getAbsolutePath();
     }
 
 
