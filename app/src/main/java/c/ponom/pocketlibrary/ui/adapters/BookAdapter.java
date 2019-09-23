@@ -91,7 +91,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         if (!urlToRead.endsWith(".txt"))return;
 
         //если книжка скачана ранее - вызываем запрос на чтение
-        if (bookToRead.uriToFile.length()>0){
+        if (!bookToRead.uriToFile.isEmpty()){
             ((SingleActivity) context).launchWebView(bookToRead.uriToFile,bookToRead);
         return;
         }
