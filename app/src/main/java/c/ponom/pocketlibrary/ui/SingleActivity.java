@@ -99,12 +99,6 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
      * <p>The default implementation updates the system menu items based on the
      * activity's state.  Deriving classes should always call through to the
      * base class implementation.
-     *
-     * @param menu The options menu as last shown or first initialized by
-     *             onCreateOptionsMenu().
-     * @return You must return true for the menu to be displayed;
-     * if you return false it will not be shown.
-     * @see #onCreateOptionsMenu
      */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
