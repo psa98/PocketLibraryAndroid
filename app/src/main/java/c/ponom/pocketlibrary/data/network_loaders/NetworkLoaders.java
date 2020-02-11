@@ -50,7 +50,8 @@ public class NetworkLoaders {
 
 
     public static void loadAuthorsList(final SubChapter subChapter){
-        //todo - определиться  с проверкой на наличие как связи на момент вызова, так и скачанного и распарсенного ранее
+        //можно определиться  с проверкой на наличие как
+        // связи на момент вызова, так и скачанного и распарсенного ранее. Впрочем хвати с пользователя и тоста
         final Context context = DIСlass.getAppContextAnywhere();
 
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -77,7 +78,7 @@ public class NetworkLoaders {
 
 
     public static void loadBooksList (final Author author){
-        //todo - определиться ч с проверкой на наличие как связи на момент вызова, так и скачанного и распарсенного ранее
+
         final Context context = DIСlass.getAppContextAnywhere();
 
         RequestQueue queue = Volley.newRequestQueue(context);

@@ -15,14 +15,6 @@ public class SystemData {
         ConnectivityManager connectivity;
         connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        /* todo - реализовать интерфейс с коллбэком для проверки связи и вывода в строке состояния
-        connectivity.addDefaultNetworkActiveListener(new ConnectivityManager.OnNetworkActiveListener() {
-            @Override
-            public void onNetworkActive() {
-
-            }
-        });
-        */
 
 
         if (connectivity == null) {

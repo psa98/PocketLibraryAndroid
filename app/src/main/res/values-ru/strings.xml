@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Библиотека Мошкова</string>
+    <string name="clear_list">Очистить список</string>
+    <string name="load_book">Загрузить книгу</string>
+    <string name="load_list">Загрузить список</string>
+    <string name="no_intenet">"Интернет недоступен. "</string>
+    <string name="pleasewait">Подождите</string>
+    <string name="saved_books_list">Книжная полка</string>
+    <string name="sendTo">Отправить</string>
+    <string name="send_a_link_to_book">Отправить ссылку на книгу</string>
+    <string name="settings">Настройки</string>
+    <string name="about">О программе</string>
+</resources>

@@ -30,7 +30,7 @@ public class LoadedListFragment extends BaseFragment {
     }
 
 
-    //todo добавить возможность удаления книги по длинному нажатию или листанию влево
+    //todo добавить возможность удаления загруженной книги по длинному нажатию или листанию влево
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,

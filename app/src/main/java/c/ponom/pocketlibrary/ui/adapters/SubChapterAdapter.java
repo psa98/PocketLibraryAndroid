@@ -63,7 +63,7 @@ public class SubChapterAdapter extends ListAdapter<SubChapter, SubChapterAdapter
         viewHolder.size.setText(item.sizeInMb==null?
                 "":item.sizeInMb.toString());
         viewHolder.url.setText(item.url);
-         viewHolder.itemView.setTag(item);
+        viewHolder.itemView.setTag(item);
 
     }
 

@@ -41,16 +41,15 @@ public class WebViewFragment extends BaseFragment {
         setRetainInstance(true);
     }
 
-    /**
-     * Called when the fragment is no longer in use.  This is called
-     * after {@link #onStop()} and before {@link #onDetach()}.
-     */
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         // TODO: надо найти способ попроще прятать пункт меню.
+        //
         //  использовать фактически глобальную переменную не годится. Возможно проще будет
-        //  фрагменту завести свой тулбар, чем менять паратметры глобального.
+        // кроме вызов onDestroy не гарантируется
+        //  фрагменту завести свой тулбар, чем менять параметры глобального.
         ((SingleActivity)getActivity()).hideSendButton();
         ((SingleActivity)getActivity()).onPrepareOptionsMenu(((SingleActivity)getActivity()).toolbar.getMenu());
         ((SingleActivity) getActivity()).currentBookUrl="";

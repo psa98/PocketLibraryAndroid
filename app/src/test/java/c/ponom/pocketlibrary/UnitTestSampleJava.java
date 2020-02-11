@@ -50,40 +50,11 @@ public class UnitTestSampleJava {
             assertNotNull(repository);
             assertNotNull(application);
 
-            testBookAddRemove(repository);
-            testChapterLoad(context);
+
 
         }
 
-    private void testChapterLoad(Context context) {
-        ArrayList<SubChapter> subChapters =HTMLCustomParsers.parseMainPage(initStringMainPage());
-         assertTrue (subChapters.size()>15);
 
-         for (SubChapter chapter:subChapters) System.out.println(chapter.subChapterName);
-        ArrayList<Author> authors =HTMLCustomParsers.parseSubChapter(getChapter(),subChapters.get(6));
-        for (Author author:authors) System.out.println(author.authorName);
-
-
-    }
-
-    private void testBookAddRemove(Repository repository) {
-        Book book=new Book();
-        book.bookName="testBook";
-        book.sizeInKb=12;
-
-        repository.insertRecord(book);
-        assertEquals(12, repository.getTotalLoadedKbForTest());
-
-        book=new Book();
-        book.bookName="testBook2";
-        book.sizeInKb=14;
-        repository.insertRecord(book);
-        System.out.println(repository.getTotalLoadedKbForTest());
-        assertEquals(26, repository.getTotalLoadedKbForTest());
-
-        repository.clearBooks();
-        assertEquals(0, repository.getTotalLoadedKbForTest());
-    }
 
     private String initStringMainPage() {
         return "<html><head><title>Lib.Ru: Библиотека Максима Мошкова</title></head><body><pre>\n" +

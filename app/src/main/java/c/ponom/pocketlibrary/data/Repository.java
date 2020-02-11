@@ -33,8 +33,12 @@ public class Repository {
         private static BookDAO mBookDAO;
         private static SubChapterDAO mSubChapterDAO;
 
-        // todo переписать с асинков на экзекьюторы?
-        private static HashMap<String, Bundle> webViewState = new HashMap<>();
+        // сохранение позиции WebView в текущей книге оказалось нетривиальной задачей.
+        // Возможные варианты  - ли все таки решить эту проблему в нем, или перейти на вкладки Google
+        // через поднятие внутреннего сервера - возможно там само запоминает позицию или есть удобный метод.
+        // Да и быстрее он
+
+        //private static HashMap<String, Bundle> webViewState = new HashMap<>();
 
 
 
@@ -99,21 +103,6 @@ public class Repository {
 
 
 
-    // вынос чтения файла в другой поток я подготовил, но пока это не используется и не отлаживалось.
-    // Мне не нравится блокирующий get. Когда буду переделывать с асиинктасков на экзекьюторы,
-    // разберемся с этим. В принципе при вызове книги на чтение надо отдавать в метод коллбэк, который
-    // будет вызван по завершении - и уже в нем вызывать loadWebView
-
-    public String getBookFromFile (String uri) {
-        AsyncTask<String, Void, String> task = new loadBookFromFile().execute(uri);
-        try {
-            return task.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
 
 
@@ -130,12 +119,6 @@ public class Repository {
     }
 
 
-
-    public Bundle loadWebState(String name) {
-
-        return webViewState.get(name);
-
-    }
 
 
 
@@ -168,8 +151,6 @@ public class Repository {
 
 
     private static  class insertAsyncTaskAll extends AsyncTask<BaseEntity, Void, Void> {
-        // todo - оставить возможность передать в задачу массив сразу
-        //  такая замена должна сработать -> Author[]) params, надо только протестировать
 
             @Override
             protected Void doInBackground(final BaseEntity... params) {
@@ -244,17 +225,6 @@ public class Repository {
 
 
 
-
-    private static  class loadBookFromFile extends AsyncTask<String , Void, String> {
-     @Override
-        protected String doInBackground(final String... params) {
-          return " To do! ";
-     //loadSavedFile(params[0]);
-        }
-    //todo - Обработать отмену операции при повороте?
-
-
-    }
 
 
 

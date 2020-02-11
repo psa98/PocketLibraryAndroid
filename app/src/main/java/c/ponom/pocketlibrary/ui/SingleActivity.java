@@ -68,7 +68,7 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
         if (savedInstanceState==null) {
             // todo - вообще это потенциально глючно, проверить что будет если запустить
             //  пустое приложение без сети, потом восстановить его при включенной сети - вроде тогда загрузка
-            //  не вызовется и спиок будет пустой до перезапуска.  Надо другой метод придумать
+            //  не вызовется и спиок будет пустой до перезапуска.
             NetworkLoaders.loadChapterList();
             showMainFragment();
         }
@@ -90,16 +90,6 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
         return true;
     }
 
-    /**
-     * Prepare the Screen's standard options menu to be displayed.  This is
-     * called right before the menu is shown, every time it is shown.  You can
-     * use this method to efficiently enable/disable items or otherwise
-     * dynamically modify the contents.
-     *
-     * <p>The default implementation updates the system menu items based on the
-     * activity's state.  Deriving classes should always call through to the
-     * base class implementation.
-     */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.send).setVisible(menuSendVisible);
@@ -118,8 +108,8 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
                 super.onBackPressed();
                 break;
             }
-            case R.id.action_about_item: {
-                // todo - вызов информационного окна
+
+            case R.id.action_about_item: { // todo - вызов информационного окна, в тулбар добавить в разметку
                 break;
             }
 
