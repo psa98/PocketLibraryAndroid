@@ -77,7 +77,7 @@ public class WebViewFragment extends BaseFragment {
 
         ((SingleActivity)getActivity()).onPrepareOptionsMenu(((SingleActivity)getActivity()).toolbar.getMenu());
         ((SingleActivity) getActivity()).currentBookUrl=currentBook.url;
-        ((SingleActivity)getActivity()).showSendButton();
+        //(SingleActivity)getActivity()).showSendButton();
 
         return view;
     }

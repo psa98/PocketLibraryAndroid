@@ -121,7 +121,10 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
             case R.id.send: {
                 sendLink(currentBookUrl);
                 break;
+
+
             }
+
 
 
         }

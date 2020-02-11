@@ -3,11 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-
+    <item
+        android:id="@+id/action_about_item"
+        android:title="@string/about" />
 
     <item
         android:id="@+id/action_loaded_book_list"
         android:title="@string/saved_books_list" />
+
 
     <item
 
