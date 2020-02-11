@@ -11,4 +11,5 @@
     <string name="send_a_link_to_book">Поделиться ссылкой на книгу</string>
     <string name="settings">Настройки</string>
     <string name="about">О программе</string>
+    <string name="information_screen">Оффлайновая читалка для Библиотеки Мошкова. Версия 2.0</string>
 </resources>

@@ -25,6 +25,7 @@ import c.ponom.pocketlibrary.di.DIСlass;
 import c.ponom.pocketlibrary.ui.fragments.AuthorsListFragment;
 import c.ponom.pocketlibrary.ui.fragments.BaseFragment;
 import c.ponom.pocketlibrary.ui.fragments.BooksListFragment;
+import c.ponom.pocketlibrary.ui.fragments.InfoFragment;
 import c.ponom.pocketlibrary.ui.fragments.LoadedListFragment;
 import c.ponom.pocketlibrary.ui.fragments.SubChaptersFragment;
 import c.ponom.pocketlibrary.ui.web_view.WebViewFragment;
@@ -244,6 +245,12 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
 
     public void showLoadedListFragment() {
         final Fragment fragment = LoadedListFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainViewPager,fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+    public void showInfo() {
+        final Fragment fragment = InfoFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.mainViewPager,fragment)
                 .addToBackStack(null)
                 .commit();

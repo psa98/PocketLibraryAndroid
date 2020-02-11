@@ -10,4 +10,6 @@
     <string name="no_intenet">No Internet connection available.   You can read loaded books</string>
     <string name="send_a_link_to_book">Send a link to book</string>
     <string name="sendTo">Send a link to:</string>
+    <string name="information_screen">Lib.ru offline reader. Version  2.0</string>
+    <string name="hello_from_authors_fragment">Hello from Authors Fragment</string>
 </resources>
