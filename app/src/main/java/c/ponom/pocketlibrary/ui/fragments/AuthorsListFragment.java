@@ -46,7 +46,7 @@ public class AuthorsListFragment extends BaseFragment {
         activityUiOptions.setBackButtonVisibility(true);
         AuthorsListViewModel mViewModel = ViewModelProviders.of(this).get(AuthorsListViewModel.class);
         mViewModel.initViewModel(currentSubChapter);
-        mViewModel.getAuthorsListForSubChapter().observe(this, new Observer<List<Author>>() {
+        mViewModel.getAuthorsListForSubChapter().observe(getViewLifecycleOwner(), new Observer<List<Author>>() {
             @Override
             public void onChanged(@Nullable List<Author> authors) {
                 authorsListAdapter.submitList(authors);

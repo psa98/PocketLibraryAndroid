@@ -6,7 +6,7 @@ public class ApplicationComponent {
 
     private  static RepositoryModule repositoryModule;
     private  static SharedPrefModule sharedPrefModule;
-    private  static ActivitiesModule activitiesModule;
+
     private  static DatabaseModule databaseModule;
 
     private  static ApplicationComponent INSTANCE;
@@ -45,12 +45,7 @@ public class ApplicationComponent {
 
 
 
-    synchronized public   ActivitiesModule getActivitiesModule(){
-        if (activitiesModule!=null) return activitiesModule; else
-        { activitiesModule= new ActivitiesModule();
-            return activitiesModule;
-        }
-    }
+
 
     synchronized SharedPrefModule getSharedPrefModule(){
         if (sharedPrefModule!=null) return sharedPrefModule; else {

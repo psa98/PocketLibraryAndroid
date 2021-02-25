@@ -37,7 +37,10 @@ import c.ponom.pocketlibrary.ui.SingleActivity;
 public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
 
     private static Repository repository;
-    private Bitmap icon, icon_done;
+    private final Bitmap icon = BitmapFactory.
+            decodeResource(DIСlass.getAppResources(),android.R.drawable.checkbox_off_background);
+    private final Bitmap icon_done = BitmapFactory.
+            decodeResource(DIСlass.getAppResources(),android.R.drawable.checkbox_on_background);
 
 
 
@@ -67,7 +70,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
 
         @Override
         public boolean onLongClick(View view) {
-        Book book= (Book) view.getTag();
+        //Book book= (Book) view.getTag();
         // todo тут будет вызываться удаление файла,
         //  после вызова контекстного меню. хотя правильнее это сделать на листание влево
         return true;
@@ -77,11 +80,6 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
 
     public BookAdapter() {
         super(BookAdapter.DIFF_CALLBACK);
-        icon= BitmapFactory.
-                decodeResource(DIСlass.getAppResources(),android.R.drawable.checkbox_off_background);
-        icon_done= BitmapFactory.
-                decodeResource(DIСlass.getAppResources(),android.R.drawable.checkbox_on_background);
-
         repository = DIСlass.getRepository();
     }
 

@@ -42,13 +42,13 @@ public class LoadedListFragment extends BaseFragment {
         LoadedListViewModel mViewModel = ViewModelProviders.of(this).get(LoadedListViewModel.class);
         final TextView sizeInKb=view.findViewById(R.id.totalSize);
         mViewModel.initViewModel();
-        mViewModel.getListOfLoadedBooks().observe(this, new Observer<List<Book>>() {
+        mViewModel.getListOfLoadedBooks().observe(getViewLifecycleOwner(), new Observer<List<Book>>() {
             @Override
             public void onChanged(@Nullable List<Book> books) {
                 loadedListAdapter.submitList(books);
             }
         });
-        mViewModel.getTotalLoadedKb().observe(this, new Observer<Integer>() {
+        mViewModel.getTotalLoadedKb().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer size) {
                 sizeInKb.setText((size==null||size==0)?"":"Total: "+size+" Kb");

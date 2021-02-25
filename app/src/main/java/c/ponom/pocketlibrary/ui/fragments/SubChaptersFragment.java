@@ -41,7 +41,7 @@ public class SubChaptersFragment extends BaseFragment {
         activityUiOptions.setBackButtonVisibility(false);
 
         final SubChapterAdapter subChapterAdapter=new SubChapterAdapter();
-        viewModel.getAllSubChapters().observe(this, new Observer<List<SubChapter>>() {
+        viewModel.getAllSubChapters().observe(getViewLifecycleOwner(), new Observer<List<SubChapter>>() {
                     @Override
                     public void onChanged(@Nullable List<SubChapter> subChapters) {
                      subChapterAdapter.submitList(subChapters);

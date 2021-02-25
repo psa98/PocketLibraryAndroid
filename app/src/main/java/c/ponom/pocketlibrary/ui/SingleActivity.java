@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
 import c.ponom.pocketlibrary.R;
@@ -151,7 +153,7 @@ public class SingleActivity extends AppCompatActivity implements BaseFragment.Ac
 
 
     @Override
-    public void onAttachFragment(Fragment fragment) {
+    public void onAttachFragment(@NotNull Fragment fragment) {
         if (fragment instanceof BaseFragment) {
 
             ((BaseFragment) fragment).setActivityUiOptionsCallback(this);

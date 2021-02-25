@@ -10,6 +10,7 @@ static Application thisApplication;
     @Override
     public void onCreate() {
         super.onCreate();
+
         thisApplication = this;
     }
 

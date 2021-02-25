@@ -150,7 +150,7 @@ public class Repository {
 
 
 
-    private static  class insertAsyncTaskAll extends AsyncTask<BaseEntity, Void, Void> {
+    private static  class  insertAsyncTaskAll extends AsyncTask<BaseEntity, Void, Void> {
 
             @Override
             protected Void doInBackground(final BaseEntity... params) {

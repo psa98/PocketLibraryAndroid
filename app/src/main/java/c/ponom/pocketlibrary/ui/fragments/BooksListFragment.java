@@ -42,7 +42,7 @@ public class BooksListFragment extends BaseFragment {
         activityUiOptions.setBackButtonVisibility(true);
         BooksListViewModel mViewModel = ViewModelProviders.of(this).get(BooksListViewModel.class);
         mViewModel.initViewModel(currentAuthor);
-        mViewModel.getBookList().observe(this, new Observer<List<Book>>() {
+        mViewModel.getBookList().observe(getViewLifecycleOwner(), new Observer<List<Book>>() {
             @Override
             public void onChanged(@Nullable List<Book> books) {
                 bookAdapter.submitList(books);
