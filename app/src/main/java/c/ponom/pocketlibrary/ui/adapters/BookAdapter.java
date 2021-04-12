@@ -43,7 +43,8 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
             decodeResource(DIСlass.getAppResources(),android.R.drawable.checkbox_on_background);
 
 
-
+    // todo - наладить таки длинный клик с меню и удалением и перекидать методы вызова дествий
+    //  в VM слой
 
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {

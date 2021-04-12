@@ -52,9 +52,7 @@ public class BooksListFragment extends BaseFragment {
         RecyclerView recyclerView =  view.findViewById(R.id.recyclerViewBooksOfAuthor);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(bookAdapter);
-        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(mDividerItemDecoration);
+
 
         return view;
     }
